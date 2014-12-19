@@ -1,0 +1,1 @@
+!function(){function n(){this.select()}var c=document.querySelectorAll(".lap-info-value > input");[].forEach.call(c,function(c){c.addEventListener("click",n)})}();

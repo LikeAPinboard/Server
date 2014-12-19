@@ -1,8 +1,8 @@
-.lap-header, .lap-header > h1, .lap-menu, .lap-footer, .lap-footer > p {
+.lap-header, .lap-header > h1, .lap-menu, .lap-auth-result > p, .lap-footer, .lap-footer > p {
   margin: 0;
   padding: 0; }
 
-.lap-header > h1, .lap-token > h3, .lap-token .lap-info-value, .lap-token code, .lap-account-button, .lap-account-authorize > span, .lap-footer > p {
+.lap-header > h1, .lap-auth-result > p, .lap-token > h3, .lap-token .lap-info-value, .lap-token code, .lap-account-button, .lap-account-authorize > span, .lap-footer > p {
   font-family: 'Lato', sans-serif; }
 
 .lap-link {
@@ -13,31 +13,50 @@
 
 .lap-header {
   width: 100%;
-  height: 50px;
+  height: 40px;
   background-color: #111;
   box-shadow: 3px 3px 2px #000; }
   .lap-header > h1 {
     color: #fff;
-    height: 50px;
-    line-height: 50px;
-    width: 300px;
+    height: 40px;
+    line-height: 40px;
+    width: 200px;
     padding-left: 30px;
     letter-spacing: 1px;
     display: inline-block;
-    float: left; }
+    float: left;
+    font-size: 1.2em; }
+    .lap-header > h1 > a {
+      color: #fff;
+      text-decoration: none; }
 
 .lap-menu {
   list-style: none outside;
-  margin-left: 350px;
+  margin-left: 280px;
   text-align: left;
   margin-right: 30px; }
   .lap-menu > li {
     display: inline-block;
-    height: 50px;
-    line-height: 56px;
-    margin-left: 50px; }
+    height: 40px;
+    line-height: 46px;
+    margin-left: 40px; }
     .lap-menu > li:last-child {
       float: right; }
+
+.lap-auth-result {
+  position: absolute;
+  opacity: 0.9;
+  width: 100%; }
+  .lap-auth-result > p {
+    font-size: 1.2em;
+    padding: 12px;
+    text-align: center; }
+  .lap-auth-result.auth-success > p {
+    background: #72d9fb;
+    color: #123f4e; }
+  .lap-auth-result.auth-error > p {
+    background: #ecb4b4;
+    color: #a52020; }
 
 .lap-content {
   width: 80%;
@@ -45,9 +64,10 @@
 
 .lap-title {
   width: 80%;
-  margin: 20px auto;
+  margin: 30px auto;
   border-bottom: solid 2px #999;
-  padding-bottom: 5px; }
+  padding-bottom: 5px;
+  font-size: 1.2em; }
 
 .lap-token {
   width: 80%;
@@ -67,7 +87,7 @@
     font-style: italic;
     border: solid 1px #cabbbb;
     border-radius: 8px;
-    padding: 16px 20px;
+    padding: 12px 20px;
     background-color: #f1eaea; }
     .lap-token .lap-info-value.blank > input, .lap-token code.blank > input {
       color: red; }
@@ -81,15 +101,15 @@
   .lap-token code {
     padding: 4px 8px;
     font-weight: normal;
-    margin-left: 0; }
+    margin: 0 2px; }
 
 .lap-account {
   text-align: center;
-  margin: 20px; }
+  margin: 40px; }
 
 .lap-account-button {
   width: 400px;
-  padding: 20px 0;
+  padding: 12px 0;
   border-radius: 36px;
   background: #42b8dd;
   color: #fff;
@@ -99,6 +119,8 @@
     font-size: 30px; }
   .lap-account-button:hover {
     opacity: 0.8; }
+  .lap-account-button.disabled {
+    background: #ccc; }
 
 .lap-account-authorize {
   line-height: 64px;
@@ -106,10 +128,13 @@
   text-align: left; }
   .lap-account-authorize > span {
     font-size: 18px; }
+    .lap-account-authorize > span .fa-check {
+      color: #7acc28;
+      margin-right: 4px; }
 
 .lap-footer {
   width: 100%;
-  height: 40px;
+  height: 30px;
   background-color: #111;
   position: fixed;
   bottom: 0; }
@@ -117,5 +142,5 @@
     color: #fff;
     text-align: right;
     padding: 0 40px;
-    line-height: 40px;
-    height: 40px; }
+    line-height: 30px;
+    height: 30px; }

@@ -170,28 +170,33 @@ class UserModel extends SZ_Kennel
     {
         $this->db->transaction();
 
-        // Does User already registered?
-        $sql = $this->_genUserFindSQL();
-        $sql .= "WHERE U.facebook_access_token = ? LIMIT 1";
-
-        $query = $this->db->query($sql, array($facebookAuthToken));
-        if ( $query->row() )
+        // Does already Logged In?
+        $userID = $this->getUserID();
+        if ( $userID === 0 )
         {
-            $id = $query->row()->id;
-            $this->updateLastLogin($id);
-            $this->db->commit();
-            return $id;
-        }
+            // Does User already registered?
+            $sql = $this->_genUserFindSQL();
+            $sql .= "WHERE U.facebook_access_token = ? LIMIT 1";
 
-        $userID = $this->createUser(array(
-            "name"                  => $facebookName,
-            "facebook_access_token" => $facebookAuthToken
-        ));
+            $query = $this->db->query($sql, array($facebookAuthToken));
+            if ( $query->row() )
+            {
+                $id = $query->row()->id;
+                $this->updateLastLogin($id);
+                $this->db->commit();
+                return $id;
+            }
 
-        if ( ! $userID )
-        {
-            $this->db->rollback();
-            return 0;
+            $userID = $this->createUser(array(
+                "name"                  => $facebookName,
+                "facebook_access_token" => $facebookAuthToken
+            ));
+
+            if ( ! $userID )
+            {
+                $this->db->rollback();
+                return 0;
+            }
         }
 
         // Insert relation table
@@ -225,28 +230,33 @@ class UserModel extends SZ_Kennel
     {
         $this->db->transaction();
 
-        // Does User already registered?
-        $sql = $this->_genUserFindSQL();
-        $sql .= "WHERE U.github_access_token = ? LIMIT 1";
-
-        $query = $this->db->query($sql, array($githubAuthToken));
-        if ( $query->row() )
+        // Does already Logged In?
+        $userID = $this->getUserID();
+        if ( $userID === 0 )
         {
-            $id = $query->row()->id;
-            $this->updateLastLogin($id);
-            $this->db->commit();
-            return $id;
-        }
+            // Does User already registered?
+            $sql = $this->_genUserFindSQL();
+            $sql .= "WHERE U.github_access_token = ? LIMIT 1";
 
-        $userID = $this->createUser(array(
-            "name"                => $githubName,
-            "github_access_token" => $githubAuthToken
-        ));
+            $query = $this->db->query($sql, array($githubAuthToken));
+            if ( $query->row() )
+            {
+                $id = $query->row()->id;
+                $this->updateLastLogin($id);
+                $this->db->commit();
+                return $id;
+            }
 
-        if ( ! $userID )
-        {
-            $this->db->rollback();
-            return 0;
+            $userID = $this->createUser(array(
+                "name"                => $githubName,
+                "github_access_token" => $githubAuthToken
+            ));
+
+            if ( ! $userID )
+            {
+                $this->db->rollback();
+                return 0;
+            }
         }
 
         // Insert relation table
@@ -280,28 +290,33 @@ class UserModel extends SZ_Kennel
     {
         $this->db->transaction();
 
-        // Does User already registered?
-        $sql = $this->_genUserFindSQL();
-        $sql .= "WHERE U.twitter_access_token = ? LIMIT 1";
-
-        $query = $this->db->query($sql, array($twitterAuthToken));
-        if ( $query->row() )
+        // Does already Logged In?
+        $userID = $this->getUserID();
+        if ( $userID === 0 )
         {
-            $id = $query->row()->id;
-            $this->updateLastLogin($id);
-            $this->db->commit();
-            return $id;
-        }
+            // Does User already registered?
+            $sql = $this->_genUserFindSQL();
+            $sql .= "WHERE U.twitter_access_token = ? LIMIT 1";
 
-        $userID = $this->createUser(array(
-            "name"                 => $twitterName,
-            "twitter_access_token" => $twitterAuthToken
-        ));
+            $query = $this->db->query($sql, array($twitterAuthToken));
+            if ( $query->row() )
+            {
+                $id = $query->row()->id;
+                $this->updateLastLogin($id);
+                $this->db->commit();
+                return $id;
+            }
 
-        if ( ! $userID )
-        {
-            $this->db->rollback();
-            return 0;
+            $userID = $this->createUser(array(
+                "name"                 => $twitterName,
+                "twitter_access_token" => $twitterAuthToken
+            ));
+
+            if ( ! $userID )
+            {
+                $this->db->rollback();
+                return 0;
+            }
         }
 
         // Insert relation table

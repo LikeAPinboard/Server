@@ -9,7 +9,7 @@
             </div>
         <?php endif;?>
         <section class="lap-content">
-            <h2 class="lap-title">Sign in</h2>
+            <h2 class="lap-title">Your Accout Status</h2>
             <section class="lap-token">
                 <h3>This server URL ( for Chrome Extension )</h3>
                 <p class="lap-info-value">
@@ -24,14 +24,14 @@
                     <i class="fa fa-download"></i>
                     Download
                 </a>
-                Download <code>user.laprc</code> and move to <code>$HOME/.laprc</code>
+                Download <code class="inline">user.laprc</code> and move to <code class="inline">$HOME/.laprc</code>
             </section>
             <div class="lap-account pure-g">
                 <div class="pure-u-2-3">
-                    <button class="pure-button lap-account-button lap-account-twitter<?php echo ( ! $user->twitter_id ) ? " disabled" : "";?>">
+                    <a href="<?php echo ( ! $user->twitter_id ) ? page_link("signin/twitter?c=1") : "#";?>" class="pure-button lap-account-button lap-account-twitter<?php echo ( $user->twitter_id ) ? " disabled" : "";?>">
                         <i class="fa fa-twitter"></i>
                         Connect with Twitter
-                    </button>
+                    </a>
                 </div>
                 <div class="pure-u-1-3 lap-account-authorize">
                     <?php if ( ! $user->twitter_id ):?>
@@ -45,10 +45,10 @@
             </div>
             <div class="lap-account pure-g">
                 <div class="pure-u-2-3">
-                    <button class="pure-button lap-account-button lap-account-github<?php echo ( ! $user->github_id ) ? " disabled" : "";?>">
+                    <a href="<?php echo ( ! $user->github_id ) ? page_link("signin/github?c=1") : "#";?>" class="pure-button lap-account-button lap-account-github<?php echo ( $user->github_id ) ? " disabled" : "";?>">
                         <i class="fa fa-github-alt"></i>
                         Connect with Github
-                    </button>
+                    </a>
                 </div>
                 <div class="pure-u-1-3 lap-account-authorize">
                     <?php if ( ! $user->github_id ):?>

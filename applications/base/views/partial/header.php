@@ -10,7 +10,7 @@
     </head>
     <body>
         <header class="lap-header">
-            <h1>Like A Pinboard</h1>
+        <h1><a href="<?php echo page_link();?>">Like A Pinboard</a></h1>
             <ul class="lap-menu">
                 <?php if ( isset($user) ):?>
                 <li><a href="<?php echo page_link("recent/pins");?>" class="lap-link">Recent pins</a></li>

@@ -13,7 +13,7 @@
             <section class="lap-token">
                 <h3>This server URL ( for Chrome Extension )</h3>
                 <p class="lap-info-value">
-                <input type="text" value="<?php echo page_link();?>" readonly>
+                <input type="text" value="<?php echo prep_str(get_config("api_server_url"));?>" readonly>
                 </p>
                 <h3>Your token ( for Chrome Extension )</h3>
                 <p class="lap-info-value">

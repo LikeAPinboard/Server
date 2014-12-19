@@ -55,6 +55,10 @@
  * 
  * ====================================================================
  */
-
+$event["process_start"] = array(
+    "class"    => "ProcessStartEventHandler",
+    "function" => "checkLogin",
+    "once"     => true
+);
 
 

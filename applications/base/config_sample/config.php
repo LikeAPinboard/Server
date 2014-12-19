@@ -34,6 +34,15 @@ $config['twitter_consumer_secret'] = '';
 $config['github_client_id']          = '';
 $config['github_application_secret'] = '';
 
+/*
+ * --------------------------------------------------
+ * API Server URL
+ *
+ * Working lap API Server URL
+ * --------------------------------------------------
+ */
+$config["lap_api_seerver"] = "http://api.yourdomain.com";
+
 
 // ========= /Application domain settings =================
 

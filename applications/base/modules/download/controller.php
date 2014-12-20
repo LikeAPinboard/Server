@@ -20,7 +20,7 @@ class DownloadController extends SZ_Breeder
         $user = $this->userModel->getUserByID($id);
 
         $rcFile  = "{\n";
-        $rcFile .= "  \"url\":\"" . page_link() . "\",\n";
+        $rcFile .= "  \"url\":\"" . $this->env->getConfig("lap_api_server") . "\",\n";
         $rcFile .= "  \"token\":\"" . $user->token . "\"\n";
         $rcFile .= "}";
 

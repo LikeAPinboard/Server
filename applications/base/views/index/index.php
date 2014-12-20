@@ -32,6 +32,7 @@
                         <p class="lap-info-value">
                         <input type="text" value="<?php echo prep_str($user->token);?>" readonly>
                         </p>
+                        <p>Or open extension on this page, automatic setting inputed.</p>
                     </li>
                 </ol>
                 <h3>Alfred workflow ( Mac OS Only )</h3>

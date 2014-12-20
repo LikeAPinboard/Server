@@ -46,7 +46,9 @@
 .lap-auth-result {
   position: absolute;
   opacity: 0.9;
-  width: 100%; }
+  width: 100%;
+  animation: fade 0.7s linear 2.5s 1 forwards;
+  -webkit-animation: fade 0.7s linear 2.5s 1 forwards; }
   .lap-auth-result > p {
     font-size: 1.2em;
     padding: 12px;
@@ -57,6 +59,28 @@
   .lap-auth-result.auth-error > p {
     background: #ecb4b4;
     color: #a52020; }
+
+@keyframes fade {
+  0% {
+    opacity: 1; }
+
+  99% {
+    opacity: 0; }
+
+  100% {
+    display: none;
+    opacity: 0; } }
+
+@-webkit-keyframes fade {
+  0% {
+    opacity: 1; }
+
+  99% {
+    opacity: 0; }
+
+  100% {
+    display: none;
+    opacity: 0; } }
 
 .lap-content {
   width: 80%;

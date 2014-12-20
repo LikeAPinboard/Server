@@ -41,7 +41,7 @@ $config['github_application_secret'] = '';
  * Working lap API Server URL
  * --------------------------------------------------
  */
-$config["lap_api_seerver"] = "http://api.yourdomain.com";
+$config["lap_api_server"] = "http://api.yourdomain.com";
 
 
 // ========= /Application domain settings =================

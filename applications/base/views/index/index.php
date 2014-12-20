@@ -9,23 +9,56 @@
             </div>
         <?php endif;?>
         <section class="lap-content">
-            <h2 class="lap-title">Your Accout Status</h2>
+            <h2 class="lap-title">API tools</h2>
             <section class="lap-token">
-                <h3>This server URL ( for Chrome Extension )</h3>
-                <p class="lap-info-value">
-                <input type="text" value="<?php echo prep_str(get_config("lap_api_server"));?>" readonly>
-                </p>
-                <h3>Your token ( for Chrome Extension )</h3>
-                <p class="lap-info-value">
-                <input type="text" value="<?php echo prep_str($user->token);?>" readonly>
-                </p>
-                <h3>Download Alfred .rc file ( for Alfred Worflow )</h3>
-                <a href="<?php echo page_link("download");?>" class="pure-button button-primary lap-downloadrc">
-                    <i class="fa fa-download"></i>
-                    Download
-                </a>
-                Download <code class="inline">user.laprc</code> and move to <code class="inline">$HOME/.laprc</code>
+                <h3>Chrome Extension</h3>
+                <ol class="lap-tool-steps">
+                    <li>
+                        <h4>Download Extension</h4>
+                        <p><a href="<?php echo page_link("download/extension");?>" class="pure-button button-primary">
+                            <i class="fa fa-download"></i>
+                            Download
+                            </a> Extension, Drap and Drop to <code class="inline">chrome://extensions/</code>
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Initial Setting</h4>
+                        <p>When first opened extension, you need to input API settings below:</p>
+                        <h5>API Server URL:</h5>
+                        <p class="lap-info-value">
+                        <input type="text" value="<?php echo prep_str(get_config("lap_api_server"));?>" readonly>
+                        </p>
+                        <h5>API Token:</h5>
+                        <p class="lap-info-value">
+                        <input type="text" value="<?php echo prep_str($user->token);?>" readonly>
+                        </p>
+                    </li>
+                </ol>
+                <h3>Alfred workflow ( Mac OS Only )</h3>
+                <ol class="lap-tool-steps">
+                    <li>
+                        <h4>Download workflow</h4>
+                        <p><a href="<?php echo page_link("download/workflow");?>" class="pure-button button-primary">
+                            <i class="fa fa-download"></i>
+                            Download
+                            </a> workflow, and double click to install ( need Alfred2 + powerpack )
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Download .rc file</h4>
+                        <p><a href="<?php echo page_link("download/rc");?>" class="pure-button button-primary">
+                            <i class="fa fa-download"></i>
+                            Download
+                            </a> <code class="inline">user.laprc</code>, move and rename to <code class="inline">$HOME/.laprc</code>
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Use workflow</h4>
+                        <p>Keyword is <code class="inline">lap</code>.</p>
+                    </li>
+                </ol>
             </section>
+            <h2 class="lap-title">Account connections</h2>
             <div class="lap-account pure-g">
                 <div class="pure-u-2-3">
                     <a href="<?php echo ( ! $user->twitter_id ) ? page_link("signin/twitter?c=1") : "#";?>" class="pure-button lap-account-button lap-account-twitter<?php echo ( $user->twitter_id ) ? " disabled" : "";?>">

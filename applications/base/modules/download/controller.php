@@ -11,6 +11,11 @@ class DownloadController extends SZ_Breeder
 
     public function index()
     {
+        return $this->response->redirect("index");
+    }
+
+    public function rc()
+    {
         $id   = $this->session->get("login_id");
         $user = $this->userModel->getUserByID($id);
 
@@ -20,6 +25,16 @@ class DownloadController extends SZ_Breeder
         $rcFile .= "}";
 
         return $this->response->download($rcFile, "user.laprc", TRUE);
+    }
+
+    public function extension()
+    {
+        return $this->response->download(SZPATH . "products/LikeAPinboard.crx", "LikeAPinboard.crx");
+    }
+
+    public function workflow()
+    {
+        return $this->response->download(SZPATH . "products/LikeAPinboard.alfredworkflow", "LikeAPinboard.alfredworkflow");
     }
 }
 

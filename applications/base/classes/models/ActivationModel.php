@@ -31,7 +31,7 @@ class ActivationModel extends SZ_Kennel implements Validatable
      */
     public function generateActivationCode($email, $userID = NULL)
     {
-        $code = sha1(openssl_random_psudo_bytes(32, TRUE));
+        $code = sha1(openssl_random_psudo_bytes(32));
         $date = new DateTime();
 
         $insert = array(

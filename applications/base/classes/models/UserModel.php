@@ -11,6 +11,7 @@ class UserModel extends SZ_Kennel
      * Model using table name
      */
     protected $table    = "pb_users";
+    protected $emails   = "pb_user_emails";
     protected $facebook = "pb_facebook_account";
     protected $github   = "pb_github_account";
     protected $twitter  = "pb_twitter_account";
@@ -80,6 +81,51 @@ class UserModel extends SZ_Kennel
         $query = $this->db->query($sql, array($token));
 
         return  ( $query->row() ) ? $query->row() : FALSE;
+    }
+
+    /**
+     * Login with registered account
+     *
+     * @public
+     * @param stdClass $account
+     * @return stdClass
+     */
+    public function loginWithAccount($account)
+    {
+        $sql = "SELECT "
+                .   "U.id, "
+                .   "U.password, "
+                .   "U.salt "
+                ."FROM "
+                .   $this->emails . " AS E "
+                ."JOIN " . $this->table . " AS U ON ( "
+                .   "E.user_id = U.id "
+                .") "
+                ."WHERE "
+                .   "E.email = ? "
+                ."AND "
+                .   "E.user_id > 0 "
+                ."AND "
+                .   "E.is_activated > 0 "
+                ."AND "
+                .   "E.primary_use = 1 "
+                ."LIMIT 1"
+                ;
+        $query = $this->db->query($sql, array($account->email));
+        if ( ! $query->row() )
+        {
+            return FALSE;
+        }
+
+        $user      = $query->row();
+        $AuthModel = Seezoo::$Importer->model("AuthModel");
+        $password  = $AuthModel->stretchPassword($user->salt, $account->password);
+        if ( $user->password !== $password )
+        {
+            return FALSE;
+        }
+
+        return $user;
     }
 
     /**
@@ -335,5 +381,35 @@ class UserModel extends SZ_Kennel
 
         $this->db->rollback();
         return 0;
+    }
+
+    public function registerManualAccount($user, $activationCode)
+    {
+        $this->db->transaction();
+
+        $AuthModel = Seezoo::$Importer->model("AuthModel");
+        $encrypted = $AuthModel->encryptPassword($user["password"]);
+
+        $userID = $this->createUser(array(
+            "name"     => $user["name"],
+            "salt"     => $encrypted->salt,
+            "password" => $encrypted->password
+        ));
+
+        if ( ! $userID )
+        {
+            $this->db->rollback();
+            return FALSE;
+        }
+
+        $ActivationModel = Seezoo::$Importer->model("ActivationModel");
+        if ( ! $ActivationModel->activationSuccess($userID, $activationCode) )
+        {
+            $this->db->rollback();
+            return FALSE;
+        }
+
+        $this->db->commit();
+        return $userID;
     }
 }

@@ -9,6 +9,7 @@ class SigninController extends SZ_Breeder
         $this->import->library("oauth");
         $this->import->library("session");
         $this->import->model("UserModel");
+        $this->import->library("Validation");
 
         $this->view->assign("title", "Sign in");
     }
@@ -19,6 +20,9 @@ class SigninController extends SZ_Breeder
         {
             return $this->response->redirect("index");
         }
+
+        $token = $this->session->generateToken("signin_token", TRUE);
+        $this->view->assign("signin_token", $token);
     }
 
     public function github()
@@ -128,4 +132,40 @@ class SigninController extends SZ_Breeder
 
         return Signal::failed;
     }
+
+    public function account()
+    {
+        $account = new stdClass;
+        $account->email    = $this->request->post("email");
+        $account->password = $this->request->post("password");
+
+        $this->validation->delimiter("<p class=\"lap-notification error\">", "</p>");
+        $this->validation->importRulesXML($this->app->path . "data/validation/signin.xml");
+
+        $token = $this->request->post("signin_token");
+        if ( ! $this->session->checkToken("signin_token", $token, TRUE) )
+        {
+            return $this->response->redirect("signin");
+        }
+
+        if ( ! $this->validation->run($account) )
+        {
+            $token = $this->session->generateToken("signin_token", TRUE);
+            $this->view->assign("signin_token", $token);
+            return $this->view->set("signin/index");
+        }
+
+        $user = $this->userModel->loginWithAccount($account);
+        if ( ! $user )
+        {
+            $token = $this->session->generateToken("signin_token", TRUE);
+            $this->view->assign("signin_token", $token);
+            $this->view->assign("signin_error", 1);
+            return $this->view->set("signin/index");
+        }
+
+        $this->session->set("login_id", $user->id);
+        return $this->response->redirect("/");
+    }
+
 }

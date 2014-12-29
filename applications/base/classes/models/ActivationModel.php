@@ -20,6 +20,8 @@ class ActivationModel extends SZ_Kennel implements Validatable
     const SUCCESS       = 0x010;
     const ALREADY       = 0x011;
     const NEED_REGISTER = 0x100;
+    const EXISTS        = 0x101;
+    const EXPIRED       = 0x110;
 
     /**
      * Generate and save activation code
@@ -31,19 +33,49 @@ class ActivationModel extends SZ_Kennel implements Validatable
      */
     public function generateActivationCode($email, $userID = NULL)
     {
-        $code = sha1(openssl_random_psudo_bytes(32));
+        // check already exists
+        if ( $this->isEmailExists($email) )
+        {
+            return self::EXISTS;
+        }
+
+        $code = sha1(openssl_random_pseudo_bytes(32));
         $date = new DateTime();
+        $date->add(DateInterval::createFromDateString("12 hours"));
 
         $insert = array(
             "user_id"         => (int)$userID,
             "email"           => $email,
             "activation_code" => $code,
-            "created_at"      => $date->format("Y-m-d H:i:s")
+            "expired_at"      => $date->format("Y-m-d H:i:s")
         );
 
         $this->db->insert($this->table, $insert);
 
         return $code;
+    }
+
+    /**
+     * Check email is already exists
+     *
+     * @public
+     * @param string $email
+     * @return bool
+     */
+    public function isEmailExists($email)
+    {
+        $sql = "SELECT "
+                .   "1 "
+                ."FROM "
+                .   $this->table . " "
+                ."WHERE "
+                .   "email = ? "
+                ."AND "
+                .   "is_activated = 0 "
+                ."LIMIT 1";
+        $query = $this->db->query($sql, array($email));
+
+        return  ( $query->row() ) ? TRUE : FALSE;
     }
 
     /**
@@ -55,39 +87,85 @@ class ActivationModel extends SZ_Kennel implements Validatable
      */
     public function activate($code)
     {
-        $sql = "SELECT "
-                .   "U.name, "
-                .   "E.is_activted, "
-                .   "E.user_id, "
-                .   "E.email "
-                ."FROM "
-                .   $this->table . " AS E "
-                ."LEFT OUTER JOIN " . $this->user . " AS U ON ( "
-                .   "E.user_id = U.user_id "
-                .") "
-                ."WHERE "
-                .   "E.activation_code = ? "
-                ."LIMIT 1"
-                ;
-        $row = $this->db->query($sql, array($code));
-        if ( ! $row )
+        $activate = $this->getByCode($code);
+        if ( ! $activate )
         {
             return self::FAILED;
         }
-        if ( $row->is_activated > 0 )
+        else if ( $activate->is_activated > 0 )
         {
             return self::ALREADY;
         }
-
-        if ( (int)$row->user_id === 0 )
+        else if ( (int)$activate->user_id === 0 )
         {
             return self::NEED_REGISTER;
         }
 
         $MailModel = Seezoo::$Importer->model("MailModel");
-        $MainModel->sendActivationSuccessMail($row->name, $row->email);
+        $MainModel->sendActivationSuccessMail($activate->name, $activate->email);
+        $this->db->update(
+            $this->table,
+            array("is_activated"    => 1),
+            array("activation_code" => $code)
+        );
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Activatin success, and update target record
+     *
+     * @public
+     * @param int $userID,
+     * @param string $activationCode
+     * @return bool
+     */
+    public function activationSuccess($userID, $activationCode)
+    {
+        $date    = new DateTime();
+        $updates = array(
+            "is_activated" => 1,
+            "user_id "     => $userID,
+            "primary_use"  => 1,
+            "activated_at" => $date->format("Y-m-d H:i:s")
+        );
+
+        return $this->db->update(
+            $this->table,
+            $updates,
+            array("activation_code" => $activationCode)
+        );
+    }
+
+    /**
+     * Get Activation Name from activation code
+     *
+     * @public
+     * @param string $code
+     * @return mixed
+     */
+    public function getByCode($code)
+    {
+        $sql = "SELECT "
+                .   "U.name, "
+                .   "E.is_activated, "
+                .   "E.user_id, "
+                .   "E.email, "
+                .   "E.expired_at "
+                ."FROM "
+                .   $this->table . " AS E "
+                ."LEFT OUTER JOIN " . $this->user . " AS U ON ( "
+                .   "E.user_id = U.id "
+                .") "
+                ."WHERE "
+                .   "E.activation_code = ? "
+                ."AND "
+                .   "E.expired_at >= ? "
+                ."LIMIT 1"
+                ;
+        $date   = new DateTime();
+        $query  = $this->db->query($sql, array($code, $date->format("Y-m-d H:i:s")));
+        return ( $query->row() ) ? $query->row() : NULL;
     }
 
     /**

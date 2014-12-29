@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0; }
 
-.lap-header > h1, .lap-token > h3, .lap-token .lap-info-value, .lap-token code, .lap-account-button, .lap-account-authorize > span, .lap-auth-result > p, .lap-footer > p {
+.lap-header > h1, .lap-auth-result > p, .lap-token > h3, .lap-token .lap-info-value, .lap-token code, .lap-account-button, .lap-account-authorize > span, .lap-footer > p {
   font-family: 'Lato', sans-serif; }
 
 .lap-link {
@@ -39,36 +39,52 @@
     display: inline-block;
     height: 40px;
     line-height: 46px;
-    margin-left: 40px;
-    position: relative; }
-    .lap-menu > li.right-side {
+    margin-left: 40px; }
+    .lap-menu > li:last-child {
       float: right; }
-    .lap-menu > li.lap-config {
-      height: 60px; }
-    .lap-menu > li:hover .lap-submenu {
-      display: block; }
 
-.lap-submenu {
-  background: #111;
-  width: 146px;
+.lap-auth-result {
   position: absolute;
-  top: 40px;
-  right: -34px;
-  z-index: 3;
-  display: none; }
-  .lap-submenu:before {
-    position: absolute;
-    content: "";
-    display: block;
-    border: solid 16px transparent;
-    border-bottom: solid 16px #111;
-    top: -31px;
-    left: 74px; }
+  opacity: 0.9;
+  width: 100%;
+  animation: fade 0.7s linear 2.5s 1 forwards;
+  -webkit-animation: fade 0.7s linear 2.5s 1 forwards; }
+  .lap-auth-result > p {
+    font-size: 1.2em;
+    padding: 12px;
+    text-align: center; }
+  .lap-auth-result.auth-success > p {
+    background: #72d9fb;
+    color: #123f4e; }
+  .lap-auth-result.auth-error > p {
+    background: #ecb4b4;
+    color: #a52020; }
+
+@keyframes fade {
+  0% {
+    opacity: 1; }
+
+  99% {
+    opacity: 0; }
+
+  100% {
+    display: none;
+    opacity: 0; } }
+
+@-webkit-keyframes fade {
+  0% {
+    opacity: 1; }
+
+  99% {
+    opacity: 0; }
+
+  100% {
+    display: none;
+    opacity: 0; } }
 
 .lap-content {
   width: 80%;
-  margin: 0 auto;
-  padding-bottom: 60px; }
+  margin: 0 auto; }
 
 .lap-title {
   width: 80%;
@@ -117,12 +133,7 @@
 
 .lap-account {
   text-align: center;
-  margin: 40px auto;
-  width: 80%; }
-
-.lap-back-button {
-  background: #df7514;
-  color: #fff; }
+  margin: 40px; }
 
 .lap-account-button {
   width: 400px;
@@ -148,57 +159,6 @@
     .lap-account-authorize > span .fa-check {
       color: #7acc28;
       margin-right: 4px; }
-
-.lap-notification {
-  width: 78%;
-  margin: 10px auto;
-  border-radius: 4px;
-  padding: 8px 14px;
-  text-align: left;
-  animation: fade 0.7s linear 2.5s 1 forwards;
-  -webkit-animation: fade 0.7s linear 2.5s 1 forwards; }
-  .lap-notification.error {
-    border: solid 1px #c00;
-    background: #fbbaba;
-    color: #c00; }
-  .lap-notification.success {
-    border: solid 1px #28cc5f;
-    background: #89f1ac;
-    color: #28cc5f; }
-
-.lap-auth-result {
-  position: absolute;
-  opacity: 0.9;
-  width: 100%;
-  padding: 0;
-  margin: 0; }
-  .lap-auth-result > p {
-    font-size: 1.2em;
-    padding: 12px;
-    text-align: center; }
-  .lap-auth-result.auth-success > p {
-    background: #72d9fb;
-    color: #123f4e; }
-  .lap-auth-result.auth-error > p {
-    background: #ecb4b4;
-    color: #a52020; }
-
-@keyframes fade {
-  0% {
-    opacity: 1; }
-
-  100% {
-    opacity: 0; } }
-
-@-webkit-keyframes fade {
-  0% {
-    opacity: 1; }
-
-  100% {
-    opacity: 0; } }
-
-.lap-button-wrapper {
-  margin: 20px 0 0 0; }
 
 .lap-footer {
   width: 100%;

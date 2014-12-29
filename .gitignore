@@ -2,3 +2,6 @@ etc/caches/session/sess_*
 application/base/config/
 
 products/LikeAPinboard*
+
+template/node_modules
+

@@ -3,7 +3,9 @@
 class ProcessStartEventHandler
 {
     private $whiteListSegment = array(
-        "signin"
+        "signin",
+        "activate",
+        "register"
     );
 
     public function checkLogin()

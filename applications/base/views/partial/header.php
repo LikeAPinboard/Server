@@ -13,8 +13,35 @@
         <h1><a href="<?php echo page_link();?>">Like A Pinboard</a></h1>
             <ul class="lap-menu">
                 <?php if ( isset($user) ):?>
-                <li><a href="<?php echo page_link("recent/pins");?>" class="lap-link">Recent pins</a></li>
-                <li><a href="<?php echo page_link("signout");?>" class="lap-link">Sign out</a></li>
+                <li>
+                    <a href="<?php echo page_link("recent/pins");?>" class="lap-link">Recent pins</a>
+                </li>
+                <li class="right-side">
+                    <a href="<?php echo page_link("signout");?>" class="lap-link">
+                        <i class="fa fa-sign-out"></i>
+                        Sign out
+                    </a>
+                </li>
+                <li class="right-side lap-config">
+                    <a href="<?php echo page_link("my");?>" class="lap-link">
+                        <i class="fa fa-gear"></i>
+                        <?php echo prep_str($user->name);?>
+                    </a>
+                    <ul class="lap-submenu">
+                        <li>
+                            <a href="<?php echo page_link("my/tools");?>" class="lap-link">
+                                <i class="fa fa-chain"></i>
+                                Tools
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?php echo page_link("my/account");?>" class="lap-link">
+                                <i class="fa fa-user"></i>
+                                Account
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <?php endif;?>
             </ul>
         </header>

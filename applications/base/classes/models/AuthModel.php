@@ -23,7 +23,7 @@ class AuthModel extends SZ_Kennel
     {
         $enc = new stdClass;
         $enc->salt     = sha1(openssl_random_pseudo_bytes(32));
-        $enc->password = $this->_stretchPassword($enc->salt, $password);
+        $enc->password = $this->stretchPassword($enc->salt, $password);
 
         return $enc;
     }
@@ -31,12 +31,12 @@ class AuthModel extends SZ_Kennel
     /**
      * Stretching password
      *
-     * @protected
+     * @public
      * @param string $salt
      * @param string $password
      * @retrun string
      */
-    protected function _stretchPassword($salt, $password)
+    public function stretchPassword($salt, $password)
     {
         for ( $i = 0; $i < self::STRETCHING_TIMES; ++$i )
         {

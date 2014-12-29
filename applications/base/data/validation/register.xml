@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validation>
+    <field>
+        <name>name</name>
+        <label>Name</label>
+        <rules>required|alnum_dash|max_length[64]</rules>
+    </field>
+    <field>
+        <name>password</name>
+        <label>Password</label>
+        <rules>required|min_length[6]</rules>
+    </field>
+    <field>
+        <name>password_match</name>
+        <label>Password(Confirm)</label>
+        <rules>required|min_length[6]|matches[password]</rules>
+    </field>
+</validation>
+

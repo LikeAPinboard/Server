@@ -1,11 +1,15 @@
 <?php echo $this->partial("partial/header");?>
         <?php if ( $auth_result === 0 ):?>
-            <div class="lap-auth-result auth-success">
+            <div class="lap-auth-result lap-notification auth-success">
                 <p>Authenticate success.</p>
             </div>
         <?php elseif ( $auth_result === 1 ):?>
-            <div class="lap-auth-result auth-error">
+            <div class="lap-auth-result lap-notification auth-error">
                 <p>Authenticate error.</p>
+            </div>
+        <?php elseif ( $auth_result === 2 ):?>
+            <div class="lap-auth-result lap-notification auth-success">
+                <p>User registered.</p>
             </div>
         <?php endif;?>
         <section class="lap-content">

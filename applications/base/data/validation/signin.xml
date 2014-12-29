@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validation>
+    <field>
+        <name>email</name>
+        <label>Email</label>
+        <rules>required|max_length[255]</rules>
+    </field>
+    <field>
+        <name>password</name>
+        <label>Password</label>
+        <rules>required</rules>
+    </field>
+</validation>
+

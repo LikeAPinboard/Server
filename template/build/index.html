@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>Test View</title>
+        <link href="//fonts.googleapis.com/css?family=Lato:100,400" rel="stylesheet" type="text/css">
+        <link href="//yui.yahooapis.com/pure/0.5.0/pure-min.css" rel="stylesheet" type="text/css">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="index.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <header class="lap-header">
+            <h1>Like A Pinboard</h1>
+            <ul class="lap-menu">
+                <li><a href="#" class="lap-link">Recent pins</a></li>
+                <li><a href="#" class="lap-link">Recent tags</a></li>
+                <li><a href="#" class="lap-link">Sign out</a></li>
+            </ul>
+        </header>
+        <div class="lap-auth-result auth-success">
+                            <p>Authenticate success.</p>
+                                        </div>
+        <section class="lap-content">
+            <h2 class="lap-title">Sign in</h2>
+            <section class="lap-token">
+                <h3>Chrome Extension</h3>
+                <ol class="lap-tool-steps">
+                    <li>
+                        <h4>Download Extension</h4>
+                        <p><a href="#" class="pure-button button-primary">
+                            <i class="fa fa-download"></i>
+                            Download
+                            </a> Extension, Drap and Drop to <code class="inline">chrome://extensions/</code>
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Initial Setting</h4>
+                        <p>When first opened extension, you need to input API settings below:</p>
+                        <h5>API Server URL:</h5>
+                        <p class="lap-info-value">
+                            <input type="text" value="http://example.com" readonly>
+                        </p>
+                        <h5>API Token:</h5>
+                        <p class="lap-info-value">
+                            <input type="text" value="http://example.com" readonly>
+                        </p>
+                    </li>
+                </ol>
+                <h3>Alfred workflow ( Mac OS Only )</h3>
+                <ol class="lap-tool-steps">
+                    <li>
+                        <h4>Download workflow</h4>
+                        <p><a href="#" class="pure-button button-primary">
+                            <i class="fa fa-download"></i>
+                            Download
+                            </a> workflow, and double click to install ( need Alfred2 + powerpack )
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Download .rc file</h4>
+                        <p><a href="#" class="pure-button button-primary">
+                            <i class="fa fa-download"></i>
+                            Download
+                            </a> <code class="inline">user.laprc</code>, move and rename to <code class="inline">$HOME/.laprc</code>
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Use workflow</h4>
+                        <p>Keyword is <code class="inline">lap</code>.</p>
+                    </li>
+                </ol>
+            </section>
+            <div class="lap-account pure-g">
+                <div class="pure-u-2-3">
+                    <button class="pure-button lap-account-button lap-account-twitter">
+                        <i class="fa fa-twitter"></i>
+                        Sign in with Twitter
+                    </button>
+                </div>
+                <div class="pure-u-1-3 lap-account-authorize">
+                    <span>Authorized</span>
+                </div>
+            </div>
+            <div class="lap-account pure-g">
+                <div class="pure-u-2-3">
+                    <button class="pure-button lap-account-button lap-account-github">
+                        <i class="fa fa-github-alt"></i>
+                        Sign in with Github
+                    </button>
+                </div>
+                <div class="pure-u-1-3 lap-account-authorize">
+                    <span>Authorized</span>
+                </div>
+            </div>
+        </section>
+        <footer class="lap-footer">
+            <p>Like A Pinboard, manage your bookmarks.</p>
+        </footer>
+    </body>
+</html>

@@ -7,30 +7,8 @@ class ActivateController extends SZ_Breeder
         parent::__construct();
         $this->import->model("UserModel");
         $this->import->model("ActivationModel");
+        $this->import->library("Session");
         $this->import->library("Validation");
-    }
-
-    public function post_index()
-    {
-        $data = new stdClass;
-        $data->email = $this->request->post("email");
-
-        // Validate post data
-        $this->validation->field("email")->setRules("required|valid_email|max_length[255]");
-        if ( ! $this->validation->run($data) )
-        {
-            return $this->view->set("signin/index");
-        }
-
-        // Create activation code
-        $activationCode = $this->activationModel->generateActivationCode($data->email);
-
-        // Send mail
-        if ( $this->mailModel->sendActivationMail($data->email, $activationCode) === FALSE )
-        {
-            $this->view->assign("sendMailError", 1);
-            return $this->view->set("signin/index");
-        }
     }
 
     public function verify()
@@ -38,7 +16,7 @@ class ActivateController extends SZ_Breeder
         $data = new stdClass;
         $data->code = $this->request->get("code");
 
-        $this->validation->field("code")->setRules("required")->setRules($this->activationModel);
+        $this->validation->field("code", "")->setRules("required")->setRules($this->activationModel);
         if ( ! $this->validation->run($data) )
         {
             return $this->view->set("activate/error");
@@ -47,16 +25,20 @@ class ActivateController extends SZ_Breeder
         // Do activation
         $code   = $this->validation->value("code");
         $status = $this->activationModel->activate($code);
-        switch ( $result )
+        switch ( $status )
         {
             case ActivationModel::SUCCESS:
                 return $this->response->redirect("/");
 
             case ActivationModel::NEED_REGISTER:
-                return $this->response->redirect("registration?code=" . $code);
+                $this->session->setFlash("activation_signed_code", $code);
+                return $this->response->redirect("register");
+
+            case ActivationModel::ALREADY:
+                return $this->view->set("activate/already");
 
             default:
-                return $this->view->set("activate/activate_error");
+                return $this->view->set("activate/error");
         }
     }
 

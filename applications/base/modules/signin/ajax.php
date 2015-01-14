@@ -38,7 +38,7 @@ class SigninAjax extends SZ_Breeder
         }
 
         // Send mail
-        if ( ! $MailModel->sendActivationMail($data->email, $activationCode) === FALSE )
+        if ( $MailModel->sendActivationMail($data->email, $activationCode) === FALSE )
         {
             return $this->_sendJson(400, "Sorry, our mail server has a problem.");
         }

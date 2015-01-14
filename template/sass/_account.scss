@@ -1,0 +1,118 @@
+.lap-title {
+    width: 80%;
+    margin: 30px auto;
+    border-bottom: solid 2px #999;
+    padding-bottom: 5px;
+    font-size: 1.2em;
+}
+
+.lap-token {
+    width: 80%;
+    border: solid 2px #ddd;
+    border-radius: 8px;
+    margin: 20px auto;
+    background: #fff;
+
+    > h3 {
+        margin: 20px;
+        color: #2875cc;
+        @extend %Gfont;
+        border-bottom: dotted 1px #2875cc;
+        padding-bottom: 6px;
+    }
+
+    h4 {
+        margin: 20px 0;
+    }
+
+    h5 {
+        margin: 10px 0;
+    }
+
+    .lap-info-value,
+    code {
+        margin: 10px 20px 10px 0;
+        @extend %Gfont;
+        font-size: 16px;
+        letter-spacing: 1px;
+        font-style: italic;
+        border: solid 1px #cabbbb;
+        border-radius: 8px;
+        padding: 12px 20px;
+        background-color: #f1eaea;
+
+        &.blank {
+            > input {
+                color: red;
+            }
+        }
+
+        > input {
+            width: 100%;
+            background: none;
+            border: none;
+        }
+    }
+
+    .lap-downloadrc {
+        margin: 0 20px 20px 20px;
+        border-radius: 6px;
+    }
+
+    code {
+        padding: 4px 8px;
+        font-weight: normal;
+        margin: 0 2px;
+    }
+
+}
+
+.lap-account {
+    text-align: center;
+    margin: 40px auto;
+    width: 80%;
+}
+
+.lap-back-button {
+    background: rgb(223, 117, 20);
+    color: #fff;
+}
+
+.lap-account-button {
+    width: 400px;
+    padding: 12px 0;
+    border-radius: 36px;
+    background: rgb(66, 184, 221);
+    color: #fff;
+    font-size: 20px;
+    @extend %Gfont;
+
+    .fa {
+        margin-right: 8px;
+        font-size: 30px;
+    }
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    &.disabled {
+        background: #ccc;
+    }
+}
+
+.lap-account-authorize {
+    line-height: 64px;
+    height: 64px;
+    text-align: left;
+
+    > span {
+        @extend %Gfont;
+        font-size: 18px;
+
+        .fa-check {
+            color: #7acc28;
+            margin-right: 4px;
+        }
+    }
+}

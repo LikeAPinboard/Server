@@ -8,6 +8,16 @@ class ProcessStartEventHandler
         "register"
     );
 
+    public function userRouting()
+    {
+        $segment = Seezoo::getRequest()->segment(1);
+        if ( preg_match("/\Au:(.+)\Z/", $segment, $match) )
+        {
+            $buffer = Application::fork(SZ_MODE_MVC, "user/{$match[1]}");
+            exit($buffer);
+        }
+    }
+
     public function checkLogin()
     {
         $session = Seezoo::$Importer->library("session");

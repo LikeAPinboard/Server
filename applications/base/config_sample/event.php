@@ -55,7 +55,12 @@
  * 
  * ====================================================================
  */
-$event["process_start"] = array(
+$event["process_start"][] = array(
+    "class"    => "ProcessStartEventHandler",
+    "function" => "userRouting",
+    "once"     => true
+);
+$event["process_start"][] = array(
     "class"    => "ProcessStartEventHandler",
     "function" => "checkLogin",
     "once"     => true

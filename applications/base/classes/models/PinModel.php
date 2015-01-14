@@ -7,16 +7,15 @@ class PinModel extends SZ_Kennel
     protected $table = "pb_urls";
     protected $tag   = "pb_tags";
 
-    public function getRecentPins($limit = 20, $offset = 0)
+    public function getRecentPins($userID, $limit = 20, $offset = 0)
     {
-        $userModel = Seezoo::$Importer->model("UserModel");
         $records   = array();
 
         $sql = "SELECT "
                 .   "id, "
                 .   "title, "
                 .   "url, "
-                .   "readed "
+                .   "created_at "
                 . "FROM "
                 .   $this->table . " "
                 . "WHERE "
@@ -26,7 +25,7 @@ class PinModel extends SZ_Kennel
                 . "OFFSET ? "
                 ;
 
-        $query = $this->db->query($sql, array($userModel->getUserID(), (int)$limit, (int)$offset));
+        $query = $this->db->query($sql, array($userID, (int)$limit, (int)$offset));
         if ( $query )
         {
             $records = array_map(function($row) {
@@ -52,10 +51,8 @@ class PinModel extends SZ_Kennel
         return ( $query->numRows() > 0 ) ? $query->result() : array();
     }
 
-    public function getRecentTags()
+    public function getRecentTags($userID)
     {
-        $userModel = Seezoo::$Importer->model("UserModel");
-
         $sql = "SELECT "
                 .   "(SELECT "
                 .       "COUNT(name) "
@@ -76,7 +73,7 @@ class PinModel extends SZ_Kennel
                 . "ORDER BY cnt DESC"
                 ;
 
-        $query = $this->db->query($sql, array($userModel->getUserID()));
+        $query = $this->db->query($sql, array($userID));
         return $query->result();
     }
 

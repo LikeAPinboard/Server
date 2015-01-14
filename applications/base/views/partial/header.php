@@ -23,7 +23,7 @@
                     </a>
                 </li>
                 <li class="right-side lap-config">
-                    <a href="<?php echo page_link("my");?>" class="lap-link">
+                    <a href="<?php echo page_link("/");?>" class="lap-link">
                         <i class="fa fa-gear"></i>
                         <?php echo prep_str($user->name);?>
                     </a>

@@ -14,7 +14,7 @@ class MailModel extends SZ_Kennel
     public function sendActivationSuccessMail($name, $email)
     {
         $this->mail->to($email);
-        $this->mail->replayTo("neo.yoshiaki.sugimoto@gmail.com");
+        $this->mail->replyTo("neo.yoshiaki.sugimoto@gmail.com");
         $this->mail->subject("[likeapinboard.com] Registration Completed");
         $this->mail->from("noreply@likeapinboard.com");
         $this->mail->fromName("likeapinboard.com");
@@ -38,7 +38,7 @@ END;
     public function sendActivationMail($email, $activationCode)
     {
         $this->mail->to($email);
-        $this->mail->replayTo("neo.yoshiaki.sugimoto@gmail.com");
+        $this->mail->replyTo("neo.yoshiaki.sugimoto@gmail.com");
         $this->mail->subject("[likeapinboard.com] Activaion Mail");
         $this->mail->from("noreply@likeapinboard.com");
         $this->mail->fromName("likeapinboard.com");

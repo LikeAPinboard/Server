@@ -13,7 +13,26 @@ class MailModel extends SZ_Kennel
 
     public function sendActivationSuccessMail($name, $email)
     {
-        // TODO: implement
+        $this->mail->to($email);
+        $this->mail->replayTo("neo.yoshiaki.sugimoto@gmail.com");
+        $this->mail->subject("[likeapinboard.com] Registration Completed");
+        $this->mail->from("noreply@likeapinboard.com");
+        $this->mail->fromName("likeapinboard.com");
+        $url = page_link("singin");
+
+        $body = <<<END
+Registration Completed!
+
+Thanks for registration. Please singin below url:
+{{$url}}
+
+Enjoy!.
+
+likeapinboard.com====================
+END;
+        $this->mail->body($body);
+
+        return $this->mail->send();
     }
 
     public function sendActivationMail($email, $activationCode)
@@ -21,22 +40,22 @@ class MailModel extends SZ_Kennel
         $this->mail->to($email);
         $this->mail->replayTo("neo.yoshiaki.sugimoto@gmail.com");
         $this->mail->subject("[likeapinboard.com] Activaion Mail");
-        $this->mail->from("localhost");
+        $this->mail->from("noreply@likeapinboard.com");
         $this->mail->fromName("likeapinboard.com");
         $url = page_link("activate/verify?code=" . $activationCode);
 
         $body = <<<END
 Activation Mail
 
-Please access url below until 12 hours:
+Please access below url until 12 hours:
 {{$url}}
 
 Thanks.
+
+likeapinboard.com====================
 END;
         $this->mail->body($body);
 
         return $this->mail->send();
-
-        // TODO: implement
     }
 }

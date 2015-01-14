@@ -5,8 +5,8 @@ class UserController extends SZ_Breeder
     public function __construct()
     {
         parent::__construct();
-        $this->import->model("PinModel");
         $this->import->model("UserModel");
+        $this->import->model("PinModel");
     }
 
     public function _mapping($method)

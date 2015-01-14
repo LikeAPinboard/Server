@@ -110,6 +110,12 @@ class RegisterController extends SZ_Breeder
             return $this->view->set("register/error");
         }
 
+        $ActivationModel = Seezoo::$Importer->model("ActivationModel");
+        $activate        = $ActivationModel->getByCode($activationCode);
+
+        $MailModel = Seezoo::$Importer->model("MailModel");
+        $MainModel->sendActivationSuccessMail($user["name"], $activate->email);
+
         $this->session->set("login_id", $userID);
         $this->session->setFlash("oauth_error", 2);
 

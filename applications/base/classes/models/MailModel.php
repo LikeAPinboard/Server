@@ -21,12 +21,12 @@ class MailModel extends SZ_Kennel
         $url = page_link("singin");
 
         $body = <<<END
-Registration Completed!
+Hi, {$name}.
 
 Thanks for registration. Please singin below url:
-{{$url}}
+{$url}
 
-Enjoy!.
+Enjoy!
 
 likeapinboard.com====================
 END;
@@ -48,7 +48,7 @@ END;
 Activation Mail
 
 Please access below url until 12 hours:
-{{$url}}
+{$url}
 
 Thanks.
 

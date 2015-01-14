@@ -27,6 +27,7 @@
                         <i class="fa fa-gear"></i>
                         <?php echo prep_str($user->name);?>
                     </a>
+ <!-- Sorry, not implemented X(
                     <ul class="lap-submenu">
                         <li>
                             <a href="<?php echo page_link("my/tools");?>" class="lap-link">
@@ -41,6 +42,7 @@
                             </a>
                         </li>
                     </ul>
+-->
                 </li>
                 <?php endif;?>
             </ul>

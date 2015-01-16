@@ -21,7 +21,7 @@
                             <input type="hidden" name="signin_token" value="<?php echo $register_token;?>">
                             <input type="hidden" name="password_match" value="<?php echo prep_str($Validation->value("password_match"));?>">
                             <button class="pure-button lap-back-button" data-backurl="<?php echo page_link("register/index");?>">Back to input</button>&nbsp;&nbsp;
-                            <button type="submit" class="pure-button pure-button-primary">Regist</button>
+                            <button type="submit" class="pure-button pure-button-primary">Register</button>
                         </div>
                     </fieldset>
                 </form>

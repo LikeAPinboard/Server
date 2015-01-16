@@ -1,4 +1,4 @@
-.lap-header, .lap-header > h1, .lap-menu, .lap-caption, .lap-auth-result > p, .lap-footer, .lap-footer > p, .lap-pin-list {
+.lap-header, .lap-header > h1, .lap-menu, .lap-submenu, .lap-caption, .lap-auth-result > p, .lap-footer, .lap-footer > p, .lap-section > fieldset > p, .lap-section-caption, .lap-emails, .lap-pin-list {
   margin: 0;
   padding: 0; }
 
@@ -8,8 +8,12 @@
 .lap-link {
   color: #fff;
   text-decoration: none; }
-  .lap-link:hover {
-    text-decoration: underline; }
+
+.fa {
+  margin-right: 6px; }
+
+.lap-hidden {
+  display: none; }
 
 .lap-header {
   width: 100%;
@@ -50,12 +54,21 @@
 
 .lap-submenu {
   background: #111;
+  font-size: 0.9em;
+  list-style: none outside;
   width: 146px;
   position: absolute;
-  top: 40px;
-  right: -34px;
+  top: 59px;
+  right: -22px;
   z-index: 3;
   display: none; }
+  .lap-submenu > li {
+    line-height: normal; }
+    .lap-submenu > li a {
+      display: block;
+      padding: 8px 16px; }
+      .lap-submenu > li a:hover {
+        background: #999; }
   .lap-submenu:before {
     position: absolute;
     content: "";
@@ -63,7 +76,7 @@
     border: solid 16px transparent;
     border-bottom: solid 16px #111;
     top: -31px;
-    left: 74px; }
+    left: 56px; }
 
 .lap-content {
   width: 80%;
@@ -213,6 +226,62 @@
       color: #7acc28;
       margin-right: 4px; }
 
+.lap-section {
+  width: 70%;
+  margin: 20px auto;
+  border: solid 1px #ccc;
+  border-radius: 6px;
+  font-size: 0.9em; }
+  .lap-section > fieldset {
+    padding: 20px; }
+    .lap-section > fieldset > p {
+      padding: 0 0 8px 0; }
+  .lap-section .warning {
+    color: #888884;
+    margin-right: 8px; }
+  .lap-section:last-of-type {
+    margin-bottom: 60px; }
+  .lap-section .pure-input {
+    width: 480px; }
+
+.lap-danger {
+  border: solid 1px #c00; }
+  .lap-danger .lap-caption, .lap-danger .pure-button {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ff3019), color-stop(100%, #cf0404));
+    color: #fff; }
+  .lap-danger .notification {
+    color: #a00; }
+
+.lap-warning {
+  border: solid 1px #f7d332; }
+  .lap-warning .lap-caption, .lap-warning .pure-button {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffd65e), color-stop(100%, #febf04));
+    color: #333; }
+  .lap-warning .notification {
+    color: #bb9f21; }
+
+.lap-section-caption {
+  padding: 10px 16px;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #eeeeee), color-stop(100%, #cccccc)); }
+
+.lap-emails {
+  padding: 20px;
+  list-style: none outside; }
+  .lap-emails > li {
+    border: solid 1px #ccc;
+    border-radius: 2px;
+    background: #eee;
+    margin: 6px 0;
+    padding: 8px 20px;
+    clear: both; }
+  .lap-emails .lap-email-status {
+    float: right;
+    line-height: 24px; }
+    .lap-emails .lap-email-status.activated, .lap-emails .lap-email-status a {
+      color: #223303; }
+    .lap-emails .lap-email-status.waiting {
+      color: #a00; }
+
 .lap-pin-list {
   list-style: none outside; }
 
@@ -257,3 +326,7 @@
     color: #900;
     font-size: 0.9em;
     margin: 0 4px; }
+
+.lap-tabs {
+  width: 80%;
+  margin: 0 auto; }

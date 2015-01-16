@@ -16,18 +16,12 @@
                 <li>
                     <a href="<?php echo page_link("recent/pins");?>" class="lap-link">Recent pins</a>
                 </li>
-                <li class="right-side">
-                    <a href="<?php echo page_link("signout");?>" class="lap-link">
-                        <i class="fa fa-sign-out"></i>
-                        Sign out
-                    </a>
-                </li>
                 <li class="right-side lap-config">
                     <a href="<?php echo page_link("/");?>" class="lap-link">
-                        <i class="fa fa-gear"></i>
+                        <i class="fa fa-user"></i>
                         <?php echo prep_str($user->name);?>
+                        <i class="fa fa-sort-desc"></i>
                     </a>
- <!-- Sorry, not implemented X(
                     <ul class="lap-submenu">
                         <li>
                             <a href="<?php echo page_link("my/tools");?>" class="lap-link">
@@ -41,8 +35,13 @@
                                 Account
                             </a>
                         </li>
+                        <li>
+                            <a href="<?php echo page_link("signout");?>" class="lap-link">
+                                <i class="fa fa-sign-out"></i>
+                                Sign out
+                            </a>
+                        </li>
                     </ul>
--->
                 </li>
                 <?php endif;?>
             </ul>

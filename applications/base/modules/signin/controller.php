@@ -18,7 +18,7 @@ class SigninController extends SZ_Breeder
     {
         if ( $this->userModel->isLoggedIn() )
         {
-            return $this->response->redirect("index");
+            return $this->response->redirect("/");
         }
 
         $token = $this->session->generateToken("signin_token", TRUE);

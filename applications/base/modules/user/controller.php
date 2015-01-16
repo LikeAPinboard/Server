@@ -5,6 +5,7 @@ class UserController extends SZ_Breeder
     public function __construct()
     {
         parent::__construct();
+        $this->import->library("Session");
         $this->import->model("UserModel");
         $this->import->model("PinModel");
     }
@@ -24,10 +25,19 @@ class UserController extends SZ_Breeder
     {
         $pins = $this->pinModel->getRecentPins($user->id);
         $tags = $this->pinModel->getRecentTags($user->id);
+        $auth = $this->session->getFlash("oauth_error");
+
+        if ( $this->userModel->isLoggedIn() )
+        {
+            $id = $this->userModel->getUserID();
+            $self = $this->userModel->getUserByID($id);
+            $this->view->assign("user", $self);
+        }
 
         $this->view->assign("pins", $pins);
         $this->view->assign("tags", $tags);
         $this->view->assign("targetUser", $user);
+        $this->view->assign("auth_result", $auth);
 
         return $this->view->set("user/index");
     }

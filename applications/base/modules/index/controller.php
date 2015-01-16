@@ -14,13 +14,11 @@ class IndexController extends SZ_Breeder
 
     public function index()
     {
-        $id   = $this->session->get("login_id");
+        $id   = $this->userModel->getUserID();;
         $user = $this->userModel->getUserByID($id);
+        $auth = $this->session->keepFlash("oauth_error");
 
-        $auth = $this->session->getFlash("oauth_error");
-
-        $this->view->assign("user", $user);
-        $this->view->assign("auth_result", $auth);
+        return $this->response->redirect("u:{$user->name}");
     }
 }
 

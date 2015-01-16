@@ -1,3 +1,7 @@
+.lap-hidden {
+    display: none;
+}
+
 .lap-header {
     @extend %reset;
     width: 100%;
@@ -54,13 +58,29 @@
 }
 
 .lap-submenu {
+    @extend %reset;
     background: #111;
+    font-size: 0.9em;
+    list-style: none outside;
     width: 146px;
     position: absolute;
-    top: 40px;
-    right: -34px;
+    top: 59px;
+    right: -22px;
     z-index: 3;
     display: none;
+
+    > li {
+        line-height: normal;
+
+        a {
+            display: block;
+            padding: 8px 16px;
+
+            &:hover {
+                background: #999;
+            }
+        }
+    }
 
     &:before {
         position: absolute;
@@ -69,7 +89,7 @@
         border: solid 16px transparent;
         border-bottom: solid 16px #111;
         top: -31px;
-        left: 74px;
+        left: 56px;
     }
 }
 

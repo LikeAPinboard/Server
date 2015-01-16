@@ -116,3 +116,99 @@
         }
     }
 }
+
+.lap-section {
+    width: 70%;
+    margin: 20px auto;
+    border: solid 1px #ccc;
+    border-radius: 6px;
+    font-size: .9em;
+
+    > fieldset {
+        padding: 20px;
+
+        > p {
+            @extend %reset;
+            padding: 0 0 8px 0;
+
+        }
+    }
+
+    .warning {
+        color: #888884;
+        margin-right: 8px;
+    }
+
+    &:last-of-type {
+        margin-bottom: 60px;
+    }
+
+    .pure-input {
+        width: 480px;
+    }
+}
+
+.lap-danger {
+    border: solid 1px #c00;
+
+    .lap-caption,
+    .pure-button {
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff3019), color-stop(100%,#cf0404));
+        color: #fff;
+    }
+
+    .notification {
+        color: #a00;
+    }
+
+}
+
+.lap-warning {
+    border: solid 1px #f7d332;
+
+    .lap-caption,
+    .pure-button {
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffd65e), color-stop(100%,#febf04));
+        color: #333;
+    }
+
+    .notification {
+        color: #bb9f21;
+    }
+}
+
+.lap-section-caption {
+    @extend %reset;
+    padding: 10px 16px;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#cccccc));
+}
+
+.lap-emails {
+    @extend %reset;
+    padding: 20px;
+    list-style: none outside;
+
+    > li {
+        border: solid 1px #ccc;;
+        border-radius: 2px;
+        background: #eee;
+        margin: 6px 0;
+        padding: 8px 20px;
+        clear: both;
+    }
+
+    .lap-email-status {
+        float: right;
+        line-height: 24px;
+
+        &.activated,
+        a {
+            color: #223303;
+        }
+
+        &.waiting {
+            color: #a00;
+        }
+    }
+}
+

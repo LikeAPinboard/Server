@@ -52,6 +52,35 @@ class UserModel extends SZ_Kennel
     }
 
     /**
+     * Get user registerd emails
+     *
+     * @public
+     * @param int $userID
+     * @return array
+     */
+    public function getUserEmails($userID)
+    {
+        $sql = "SELECT "
+                .   "id, "
+                .   "email, "
+                .   "primary_use "
+                ."FROM "
+                .   $this->emails . " "
+                ."WHERE "
+                .   "user_id = ? "
+                ."AND "
+                .   "is_activated = 1 "
+                ."AND "
+                .   "expired_at > ? "
+                ."ORDER BY activated_at ASC";
+
+        $date = new DateTime();
+        $query = $this->db->query($sql, array($userID, $date->format("Y-m-d H:i:s")));
+
+        return $query->result();
+    }
+
+    /**
      * Get user info from ID
      *
      * @public
@@ -140,7 +169,8 @@ class UserModel extends SZ_Kennel
                .    "U.*, "
                .    "F.facebook_id, "
                .    "G.github_id, "
-               .    "T.twitter_id "
+               .    "T.twitter_id, "
+               .    "E.email "
                ."FROM "
                .    $this->table . " as U "
                ."LEFT OUTER JOIN " . $this->facebook . " as F ON ( "
@@ -151,6 +181,9 @@ class UserModel extends SZ_Kennel
                .") "
                ."LEFT OUTER JOIN " . $this->twitter . " as T ON ( "
                .    "U.id = T.user_id "
+               .") "
+               ."LEFT OUTER JOIN " . $this->emails . " as E ON ( "
+               .    "U.id = E.user_id AND E.primary_use = 1 "
                .") "
                 ;
 
@@ -253,10 +286,21 @@ class UserModel extends SZ_Kennel
             "access_token"  => $facebookAuthToken
         );
 
-        if ( $this->db->insert($this->facebook, $data) )
+        if ( $this->isSocialAccountAlreadyExists($this->facebook, "facebook_id", $facebookID) )
         {
-            $this->db->commit();
-            return $userID;
+            if ( $this->db->update($this->facebook, $data, array("facebook_id" => $facebookID)) )
+            {
+                $this->db->commit();
+                return $userID;
+            }
+        }
+        else
+        {
+            if ( $this->db->insert($this->facebook, $data) )
+            {
+                $this->db->commit();
+                return $userID;
+            }
         }
 
         $this->db->rollback();
@@ -313,10 +357,21 @@ class UserModel extends SZ_Kennel
             "access_token" => $githubAuthToken
         );
 
-        if ( $this->db->insert($this->github, $data) )
+        if ( $this->isSocialAccountAlreadyExists($this->github, "github_id", $githubID) )
         {
-            $this->db->commit();
-            return $userID;
+            if ( $this->db->update($this->github, $data, array("github_id" => $githubID)) )
+            {
+                $this->db->commit();
+                return $userID;
+            }
+        }
+        else
+        {
+            if ( $this->db->insert($this->github, $data) )
+            {
+                $this->db->commit();
+                return $userID;
+            }
         }
 
         $this->db->rollback();
@@ -373,15 +428,41 @@ class UserModel extends SZ_Kennel
             "access_token" => $twitterAuthToken
         );
 
-        if ( $this->db->insert($this->twitter, $data) )
+        if ( $this->isSocialAccountAlreadyExists($this->twitter, "twitter_id", $twitterID) )
         {
-            $this->db->commit();
-            return $userID;
+            if ( $this->db->update($this->twitter, $data, array("twitter_id" => $twitterID)) )
+            {
+                $this->db->commit();
+                return $userID;
+            }
+        }
+        else
+        {
+            if ( $this->db->insert($this->twitter, $data) )
+            {
+                $this->db->commit();
+                return $userID;
+            }
         }
 
         $this->db->rollback();
         return 0;
     }
+
+    protected function isSocialAccountAlreadyExists($table, $field, $id)
+    {
+        $sql = "SELECT "
+                .   "1 "
+                ."FROM "
+                .   $table . " "
+                ."WHERE "
+                .   $field . " = ? "
+                ."LIMIT 1";
+
+        $query = $this->db->query($sql, array($id));
+        return ( $query->row() ) ? TRUE : FALSE;
+    }
+
 
     public function registerManualAccount($user, $activationCode)
     {

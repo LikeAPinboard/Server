@@ -34,6 +34,9 @@ $config['twitter_consumer_secret'] = '';
 $config['github_client_id']          = '';
 $config['github_application_secret'] = '';
 
+$config['facebook_application_id']     = '';
+$config['facebook_application_secret'] = '';
+
 /*
  * --------------------------------------------------
  * API Server URL

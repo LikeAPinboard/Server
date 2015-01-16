@@ -92,5 +92,29 @@
         form.submit();
     }
 
+    // tabs
+    (function(tabs, tabContents) {
+        if ( tabs.length === 0 ) {
+            return;
+        }
+        var activeTab     = tabs[0].parentNode;
+        var activeContent = tabContents[0];
+
+        [].forEach.call(tabs, function(tab) {
+            tab.addEventListener("click", function(evt) {
+                evt.preventDefault();
+                activeTab.classList.remove("pure-menu-selected");
+                activeContent.classList.add("lap-hidden");
+
+                activeTab = this.parentNode;
+                activeContent = document.getElementById(this.className + "-content");
+
+                activeTab.classList.add("pure-menu-selected");
+                activeContent.classList.remove("lap-hidden");
+            });
+        });
+    })(document.querySelectorAll(".lap-tabs a"),
+       document.querySelectorAll(".lap-tab-content"));
+
 
 })();

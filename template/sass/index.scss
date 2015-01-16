@@ -11,11 +11,13 @@
     color: #fff;
     text-decoration: none;
 
-    &:hover {
-        text-decoration: underline;
-    }
+}
+
+.fa {
+    margin-right: 6px;
 }
 
 @import "_common.scss";
 @import "_account.scss";
 @import "_pin.scss";
+@import "_tab.scss";

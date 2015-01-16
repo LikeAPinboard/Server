@@ -118,7 +118,7 @@ class SZ_Facebook_oauth extends SZ_Oauth_driver
 			$this->auth2();
 			return FALSE;
 		}
-		$data->image = self::REQUEST_BASE . '/' . $data->id . '/picture?type=large'; 
+		$data->image = self::REQUEST_BASE . '/' . $data->id . '/picture?type=large';
 		return $data;
 	}
 }

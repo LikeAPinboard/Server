@@ -3,16 +3,22 @@
         <section class="lap-content">
             <h2 class="lap-title">Sign in</h2>
             <div class="lap-account pure-g">
-                <div class="pure-u-1-2">
+                <div class="pure-u-1-3">
                     <a href="<?php echo page_link("signin/twitter");?>" class="pure-button lap-account-button lap-account-twitter">
                         <i class="fa fa-twitter"></i>
                         Sign in with Twitter
                     </a>
                 </div>
-                <div class="pure-u-1-2">
+                <div class="pure-u-1-3">
                     <a href="<?php echo page_link("signin/github");?>" class="pure-button lap-account-button lap-account-github">
                         <i class="fa fa-github-alt"></i>
                         Sign in with Github
+                    </a>
+                </div>
+                <div class="pure-u-1-3">
+                    <a href="<?php echo page_link("signin/facebook");?>" class="pure-button lap-account-button lap-account-facebook">
+                        <i class="fa fa-facebook-square"></i>
+                        Sign in with Facebook
                     </a>
                 </div>
             </div>

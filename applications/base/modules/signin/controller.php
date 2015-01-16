@@ -25,6 +25,60 @@ class SigninController extends SZ_Breeder
         $this->view->assign("signin_token", $token);
     }
 
+    public function facebook()
+    {
+        $this->oauth->service("facebook", array(
+            "application_id"     => $this->env->getConfig("facebook_application_id"),
+            "application_secret" => $this->env->getConfig("facebook_application_secret"),
+            "callback_url"       => page_link("signin/facebook_callback")
+        ));
+
+        if ( $this->oauth->auth2() )
+        {
+            return $this->response->redirect("index");
+        }
+
+        return Signal::failed;
+    }
+
+    public function facebook_callback()
+    {
+        $this->oauth->service("facebook", array(
+            "application_id"     => $this->env->getConfig("facebook_application_id"),
+            "application_secret" => $this->env->getConfig("facebook_application_secret"),
+            "callback_url"       => page_link("signin/facebook_callback")
+        ));
+
+        // Authnticate failed
+        if ( ! $this->oauth->auth2() )
+        {
+            $this->session->setFlash('oauth_error', 1);
+            return $this->response->redirect("index");
+        }
+
+        // Get authorized user
+        $user = $this->oauth->getUser();
+        if ( ! $user )
+        {
+            $this->session->setFlash('oauth_error', 1);
+            return $this->response->redirect("index");
+        }
+
+        $token = $this->oauth->get("access_token");
+        $id    = $user->id;
+        $name  = ( isset($user->username) ) ? $user->username : $user->name;
+
+        $userID = $this->userModel->registerWithFacebook($id, $name, $token);
+        if ( $userID )
+        {
+            $this->session->setFlash('oauth_error', 0);
+            $this->session->set("login_id", $userID);
+            return $this->response->redirect("index");
+        }
+
+        return Signal::failed;
+    }
+
     public function github()
     {
         $this->oauth->service("github", array(

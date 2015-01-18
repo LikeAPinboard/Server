@@ -7,6 +7,10 @@
     font-family: 'Lato', sans-serif;
 }
 
+body {
+    @extend %Gfont;
+}
+
 .lap-link {
     color: #fff;
     text-decoration: none;
@@ -17,7 +21,20 @@
     margin-right: 6px;
 }
 
+.lap-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+}
+
+
 @import "_common.scss";
 @import "_account.scss";
 @import "_pin.scss";
 @import "_tab.scss";
+@import "_modal.scss";

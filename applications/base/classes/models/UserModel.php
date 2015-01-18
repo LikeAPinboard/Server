@@ -63,15 +63,17 @@ class UserModel extends SZ_Kennel
         $sql = "SELECT "
                 .   "id, "
                 .   "email, "
+                .   "is_activated, "
                 .   "primary_use "
                 ."FROM "
                 .   $this->emails . " "
                 ."WHERE "
                 .   "user_id = ? "
-                ."AND "
+                ."AND ("
                 .   "is_activated = 1 "
-                ."AND "
+                ."OR "
                 .   "expired_at > ? "
+                .") "
                 ."ORDER BY activated_at ASC";
 
         $date = new DateTime();
@@ -191,6 +193,27 @@ class UserModel extends SZ_Kennel
     }
 
     /**
+     * Check UserName already exists
+     *
+     * @public
+     * @param string $name
+     * @return bool
+     */
+    public function isNameExists($name)
+    {
+        $sql = "SELECT "
+                .   "1 "
+                ."FROM "
+                .   $this->table . " "
+                ."WHERE "
+                .   "name = ? "
+                ."LIMIT 1"
+                ;
+        $query = $this->db->query($sql, array($name));
+        return ( $query->row() ) ? TRUE : FALSE;
+    }
+
+    /**
      * Create new user
      *
      * @public
@@ -199,6 +222,11 @@ class UserModel extends SZ_Kennel
      */
     public function createUser($user)
     {
+        if ( $this->isNameExists($user["name"]) )
+        {
+            return -1;
+        }
+
         $date = new DateTime();
 
         // Insert main user table
@@ -276,6 +304,11 @@ class UserModel extends SZ_Kennel
                 $this->db->rollback();
                 return 0;
             }
+            else if ( $userID === -1 )
+            {
+                $this->db->rollback();
+                return -1;
+            }
         }
 
         // Insert relation table
@@ -347,6 +380,11 @@ class UserModel extends SZ_Kennel
                 $this->db->rollback();
                 return 0;
             }
+            else if ( $userID === -1 )
+            {
+                $this->db->rollback();
+                return -1;
+            }
         }
 
         // Insert relation table
@@ -417,6 +455,11 @@ class UserModel extends SZ_Kennel
             {
                 $this->db->rollback();
                 return 0;
+            }
+            else if ( $userID === -1 )
+            {
+                $this->db->rollback();
+                return -1;
             }
         }
 

@@ -32,7 +32,7 @@
                     <fieldset>
                         <div class="pure-control-group">
                             <label for="lap-email">Email</label>
-                            <input id="lap-email" name="email" type="email" placeholder="Input registered email address" class="pure-input-2-3" value="<?php echo $Validation->value("email");?>">
+                            <input id="lap-email" name="email" type="email" placeholder="Input registered email" class="pure-input-2-3" value="<?php echo $Validation->value("email");?>">
                         </div>
                         <div class="pure-control-group">
                             <label for="lap-password">Password</label>

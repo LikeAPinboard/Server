@@ -1,0 +1,67 @@
+@keyframes slidein {
+    0% { opacity: 0; top: -100px; }
+    100% { opacity: 1; top: 10px; }
+}
+@-webkit-keyframes slidein {
+    0% { opacity: 0; top: -100px; }
+    100% { opacity: 1; top: 10px; }
+}
+.lap-modal-frame {
+    animation: slidein 0.2s ease-out 0s forwards;
+    -webkit-animation: slidein 0.2s ease-out 0s forwards;
+    position: fixed;
+    left: 50%;
+    margin-left: -250px;
+    width: 500px;
+    height: 400px;
+    z-index: 101;
+    background: #fff;
+    border-width: 2px;
+    box-shadow: 3px 3px 5px #333;
+
+    &.lap-confirm-delete {
+        height: 160px;
+    }
+
+    &.lap-confirm-username {
+        height: 300px;
+    }
+
+    &.lap-confirm-password {
+        height: 200px;
+    }
+
+    &.lap-confirm-email {
+        height: 300px;
+    }
+
+    .lap-section-caption {
+        border-radius: 4px 4px 0 0;
+    }
+
+    .square {
+        padding: 8px;
+        border: solid 1px #ccc;
+        background: #eee;
+    }
+
+    .error {
+        margin-top: 0;
+        color: #c00;
+        font-weight: bold;
+    }
+}
+
+.lap-modal-content {
+    padding: 20px;
+}
+
+.lap-modal-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    color: #fff;
+    font-size: 16px;
+    display: block;
+    padding: 2px;
+}

@@ -3,7 +3,7 @@
     <field>
         <name>name</name>
         <label>Name</label>
-        <rules>required|alnum_dash|max_length[64]</rules>
+        <rules>required|alnum_dash|max_length[64]|orig:_checkNameExists</rules>
     </field>
     <field>
         <name>password</name>

@@ -1,6 +1,7 @@
 var gulp    = require("gulp"),
     sass    = require("gulp-sass"),
-    uglify  = require("gulp-uglify");
+    uglify  = require("gulp-uglify"),
+    concat  = require("gulp-concat");
 
 gulp.task("sass", function() {
     gulp.src("./sass/index.scss")
@@ -9,7 +10,8 @@ gulp.task("sass", function() {
 });
 
 gulp.task("uglify", function() {
-    gulp.src("./js/index.js")
+    gulp.src(["./node_modules/Retriever/build/retriever.js", "./js/index.js"])
+        .pipe(concat("index.js"))
         .pipe(uglify())
         .pipe(gulp.dest("../public/js"));
 });

@@ -151,5 +151,17 @@ class RegisterController extends SZ_Breeder
 
         return TRUE;
     }
+
+    public function _checkNameExists($str, $condition)
+    {
+        $UserModel = Seezoo::$Importer->model("UserModel");
+        if ( $UserModel->isNameExists($str) )
+        {
+            $this->validation->setMessage("_checkNameExists", $str . " is already exists");
+            return FALSE;
+        }
+
+        return TRUE;
+    }
 }
 

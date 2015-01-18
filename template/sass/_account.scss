@@ -127,11 +127,11 @@
     > fieldset {
         padding: 20px;
 
-        > p {
-            @extend %reset;
-            padding: 0 0 8px 0;
+    }
 
-        }
+    .notification {
+        @extend %reset;
+        padding: 0 0 8px 0;
     }
 
     .warning {
@@ -151,7 +151,7 @@
 .lap-danger {
     border: solid 1px #c00;
 
-    .lap-caption,
+    .lap-section-caption,
     .pure-button {
         background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff3019), color-stop(100%,#cf0404));
         color: #fff;
@@ -166,7 +166,7 @@
 .lap-warning {
     border: solid 1px #f7d332;
 
-    .lap-caption,
+    .lap-section-caption,
     .pure-button {
         background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffd65e), color-stop(100%,#febf04));
         color: #333;

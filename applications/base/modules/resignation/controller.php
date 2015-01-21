@@ -6,6 +6,7 @@ class ResignationController extends SZ_Breeder
     {
         parent::__construct();
         $this->import->library("Session");
+        $this->view->assign("title", "Resignation completed");
     }
 
     public function index()

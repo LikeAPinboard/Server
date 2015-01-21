@@ -180,5 +180,9 @@
         @extend %Gfont;
         line-height: 30px;
         height: 30px;
+
+        > span {
+            float: left;
+        }
     }
 }

@@ -8,6 +8,8 @@ body, .lap-header > h1, .lap-auth-result > p, .lap-footer > p, .lap-token > h3, 
 .lap-link {
   color: #fff;
   text-decoration: none; }
+  .lap-link.lap-hover:hover {
+    text-decoration: underline; }
 
 .lap-center {
   text-align: center; }
@@ -173,6 +175,8 @@ body, .lap-header > h1, .lap-auth-result > p, .lap-footer > p, .lap-token > h3, 
     padding: 0 40px;
     line-height: 30px;
     height: 30px; }
+    .lap-footer > p > span {
+      float: left; }
 
 .lap-title {
   width: 80%;

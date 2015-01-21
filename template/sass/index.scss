@@ -14,7 +14,30 @@ body {
 .lap-link {
     color: #fff;
     text-decoration: none;
+}
 
+.lap-center {
+    text-align: center;
+}
+
+.lap-line-text {
+    line-height: 1.8;
+
+    .pure-button {
+        margin: 30px 0;
+    }
+}
+
+.lap-large-text {
+    font-size: 24px;
+}
+
+.lap-middle-text {
+    font-size: 20px;
+}
+
+.lap-small-text {
+    font-size: 16px;
 }
 
 .fa {

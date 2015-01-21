@@ -43,11 +43,21 @@ class ActivationModel extends SZ_Kennel implements Validatable
         $date = new DateTime();
         $date->add(DateInterval::createFromDateString("12 hours"));
 
+        $primary = 1;
+        if ( ! is_null($userID) )
+        {
+            if ( $this->findOne("id", array("user_id" => $userID, "primary_use" => 1)) )
+            {
+                $primary = 0;
+            }
+        }
+
         $insert = array(
             "user_id"         => (int)$userID,
             "email"           => $email,
             "activation_code" => $code,
-            "expired_at"      => $date->format("Y-m-d H:i:s")
+            "expired_at"      => $date->format("Y-m-d H:i:s"),
+            "primary_use"     => $primary
         );
 
         $this->db->insert($this->table, $insert);
@@ -102,7 +112,7 @@ class ActivationModel extends SZ_Kennel implements Validatable
         }
 
         $MailModel = Seezoo::$Importer->model("MailModel");
-        $MainModel->sendActivationSuccessMail($activate->name, $activate->email);
+        $MailModel->sendActivationSuccessMail($activate->name, $activate->email);
         $this->db->update(
             $this->table,
             array("is_activated"    => 1),

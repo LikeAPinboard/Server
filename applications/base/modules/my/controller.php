@@ -105,9 +105,12 @@ class MyController extends SZ_Breeder
             $Mail->sendResignationMail($user);
         }
         $this->userModel->logout();
+        $this->session->remove("facebook");
+        $this->session->remove("github");
+        $this->session->remove("twitter");
         $this->session->setFlash("user_removed", 1);
 
-        return $this->response->rediect("resignation");
+        return $this->response->redirect("resignation");
     }
 
     public function email()

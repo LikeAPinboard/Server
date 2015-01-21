@@ -577,14 +577,19 @@ class UserModel extends SZ_Kennel
 
         $this->db->transaction();
 
-        $this->db->delete($this->table,       array("id"      => $userID));
-        $this->db->delete($this->emails,      array("user_id" => $userID));
-        $this->db->delete($this->twitter,     array("user_id" => $userID));
-        $this->db->delete($this->github,      array("user_id" => $userID));
-        $this->db->delete($this->facebook,    array("user_id" => $userID));
-        $this->db->delete($this->rss,         array("user_id" => $userID));
-        $this->db->delete($this->rssCategory, array("user_id" => $userID));
+        if ( ! $this->db->delete($this->table, array("id" => $userID))
+             || ! $this->db->delete($this->emails, array("user_id" => $userID))
+             || ! $this->db->delete($this->twitter, array("user_id" => $userID))
+             || ! $this->db->delete($this->github, array("user_id" => $userID))
+             || ! $this->db->delete($this->facebook, array("user_id" => $userID))
+             || ! $this->db->delete($this->rss, array("user_id" => $userID))
+             || ! $this->db->delete($this->rssCategory, array("user_id" => $userID)) )
+        {
+            $this->db->rollback();
+            return FALSE;
+        }
 
+        $this->db->commit();
         return TRUE;
     }
 

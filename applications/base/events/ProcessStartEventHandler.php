@@ -5,7 +5,8 @@ class ProcessStartEventHandler
     private $whiteListSegment = array(
         "signin",
         "activate",
-        "register"
+        "register",
+        "resignation"
     );
 
     public function userRouting()

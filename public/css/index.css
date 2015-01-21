@@ -246,6 +246,9 @@ body, .lap-header > h1, .lap-auth-result > p, .lap-footer > p, .lap-token > h3, 
     padding: 20px; }
   .lap-section .notification {
     padding: 0 0 8px 0; }
+  .lap-section .lap-notification {
+    width: auto;
+    margin: 10px 20px; }
   .lap-section .warning {
     color: #888884;
     margin-right: 8px; }

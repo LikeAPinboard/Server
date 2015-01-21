@@ -10,11 +10,13 @@ class UserModel extends SZ_Kennel
     /**
      * Model using table name
      */
-    protected $table    = "pb_users";
-    protected $emails   = "pb_user_emails";
-    protected $facebook = "pb_facebook_account";
-    protected $github   = "pb_github_account";
-    protected $twitter  = "pb_twitter_account";
+    protected $table       = "pb_users";
+    protected $emails      = "pb_user_emails";
+    protected $facebook    = "pb_facebook_account";
+    protected $github      = "pb_github_account";
+    protected $twitter     = "pb_twitter_account";
+    protected $rss         = "pb_rss_urls";
+    protected $rssCategory = "pb_rss_categories";
 
     /**
      * Get user ID
@@ -536,4 +538,76 @@ class UserModel extends SZ_Kennel
         $this->db->commit();
         return $userID;
     }
+
+    public function updatePassword($password)
+    {
+        $userID = $this->getUserID();
+        if ( ! $userID )
+        {
+            return FALSE;
+        }
+
+        $AuthModel = Seezoo::$Importer->model("AuthModel");
+        $encrypted = $AuthModel->encryptPassword($password);
+
+        $update = array(
+            "salt"     => $encrypted->salt,
+            "password" => $encrypted->password
+        );
+
+        $this->db->transaction();
+
+        if ( ! $this->db->update($this->table, $update, array("id" => $userID)) )
+        {
+            $this->db->rollback();
+            return FALSE;
+        }
+
+        $this->db->commit();
+        return TRUE;
+    }
+
+    public function deleteAccountData()
+    {
+        $userID = $this->getUserID();
+        if ( ! $userID )
+        {
+            return FALSE;
+        }
+
+        $this->db->transaction();
+
+        $this->db->delete($this->table,       array("id"      => $userID));
+        $this->db->delete($this->emails,      array("user_id" => $userID));
+        $this->db->delete($this->twitter,     array("user_id" => $userID));
+        $this->db->delete($this->github,      array("user_id" => $userID));
+        $this->db->delete($this->facebook,    array("user_id" => $userID));
+        $this->db->delete($this->rss,         array("user_id" => $userID));
+        $this->db->delete($this->rssCategory, array("user_id" => $userID));
+
+        return TRUE;
+    }
+
+    public function updateUserName($userName)
+    {
+        $userID = $this->getUserID();
+        if ( ! $userID )
+        {
+            return FALSE;
+        }
+
+        $update = array("name" => $userName);
+
+        $this->db->transaction();
+
+        if ( ! $this->db->update($this->table, $update, array("id" => $userID)) )
+        {
+            $this->db->rollback();
+            return FALSE;
+        }
+
+        $this->db->commit();
+        return TRUE;
+    }
+
 }

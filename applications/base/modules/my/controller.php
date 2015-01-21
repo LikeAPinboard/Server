@@ -102,7 +102,7 @@ class MyController extends SZ_Breeder
         if ( ! empty($user->email) )
         {
             $MailModel = Seezoo::$Importer->model("MailModel");
-            $Mail->sendResignationMail($user);
+            $Mail->sendResignationMail($user->email);
         }
         $this->userModel->logout();
         $this->session->remove("facebook");

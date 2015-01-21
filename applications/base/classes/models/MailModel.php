@@ -28,7 +28,7 @@ Thanks for registration. Please singin below url:
 
 Enjoy!
 
-likeapinboard.com====================
+likeapinboard.com ====================
 END;
         $this->mail->body($body);
 
@@ -52,10 +52,31 @@ Please access below url until 12 hours:
 
 Thanks.
 
-likeapinboard.com====================
+likeapinboard.com ====================
 END;
         $this->mail->body($body);
 
         return $this->mail->send();
     }
+
+    public function sendResignationMail($user)
+    {
+        $this->mail->to($email);
+        $this->mail->replyTo("neo.yoshiaki.sugimoto@gmail.com");
+        $this->mail->subject("[likeapinboard.com] Resignation Mail");
+        $this->mail->from("noreply@likeapinboard.com");
+        $this->mail->fromName("likeapinboard.com");
+
+        $body = <<<END
+Resignation Mail
+
+Hi, {$user->name}.
+
+Your account has successfullt deleted.
+Thank you for using we service.
+
+likeapinboard.com ====================
+END;
+    }
+
 }

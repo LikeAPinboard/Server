@@ -59,3 +59,24 @@
         margin: 0 4px;
     }
 }
+
+.lap-paginate {
+    margin-top: 30px;
+    text-align: center;
+
+    > a,
+    > strong {
+        display: inline-block;
+        text-decoration: none;
+        font-size: 0.9em;
+        border: solid 1px #ccc;
+        padding: 2px 8px;
+        background: #ddd;
+        color: #333;
+
+        &:hover {
+            background: #eee;
+        }
+    }
+}
+

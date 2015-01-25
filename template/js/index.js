@@ -193,4 +193,10 @@
         });
     }
 
+    // subscribe modal
+    var subscribe = document.getElementById("lap-subscribe-user");
+    if ( subscribe ) {
+        new ModalWindow(subscribe, document.getElementById("subscribe-modal"), function() {});
+    }
+
 })();

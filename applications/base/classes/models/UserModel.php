@@ -12,11 +12,13 @@ class UserModel extends SZ_Kennel
      */
     protected $table       = "pb_users";
     protected $emails      = "pb_user_emails";
+    protected $subscribes  = "pb_user_subscribes";
     protected $facebook    = "pb_facebook_account";
     protected $github      = "pb_github_account";
     protected $twitter     = "pb_twitter_account";
     protected $rss         = "pb_rss_urls";
     protected $rssCategory = "pb_rss_categories";
+    protected $follow      = "pb_follows";
 
     /**
      * Get user ID
@@ -57,11 +59,13 @@ class UserModel extends SZ_Kennel
      * Get user registerd emails
      *
      * @public
-     * @param int $userID
+     * @param int  $userID
+     * @param bool $activatedOnly
      * @return array
      */
-    public function getUserEmails($userID)
+    public function getUserEmails($userID, $activatedOnly = FALSE)
     {
+        $bind = array((int)$userID);
         $sql = "SELECT "
                 .   "id, "
                 .   "email, "
@@ -73,13 +77,16 @@ class UserModel extends SZ_Kennel
                 .   "user_id = ? "
                 ."AND ("
                 .   "is_activated = 1 "
-                ."OR "
-                .   "expired_at > ? "
-                .") "
-                ."ORDER BY activated_at ASC";
+                ;
+        if ( $activatedOnly === FALSE )
+        {
+            $sql .= "OR expired_at > ? ";
+            $date = new DateTime();
+            $bind[] = $date->format("Y-m-d H:i:s");
+        }
+        $sql .= ") ORDER BY id ASC, activated_at ASC";
 
-        $date = new DateTime();
-        $query = $this->db->query($sql, array($userID, $date->format("Y-m-d H:i:s")));
+        $query = $this->db->query($sql, $bind);
 
         return $query->result();
     }
@@ -614,5 +621,65 @@ class UserModel extends SZ_Kennel
         $this->db->commit();
         return TRUE;
     }
+
+    public function isUserFollowed($targetUserID)
+    {
+        $sql = "SELECT "
+                .   "1 "
+                ."FROM "
+                .   $this->follow . " "
+                ."WHERE "
+                .   "user_id = ? "
+                ."AND "
+                .   "followed_user_id = ? "
+                ."LIMIT 1"
+                ;
+        $query = $this->db->query($sql, array((int)$this->getUserID(), (int)$targetUserID));
+        return ( $query->row() ) ? TRUE : FALSE;
+    }
+
+    public function isUserSubscribed($userID, $tag = FALSE)
+    {
+        $bind = array((int)$this->getUserID(), (int)$userID);
+        $sql = "SELECT "
+                .   "1 "
+                ."FROM "
+                .   $this->subscribes . " "
+                ."WHERE "
+                .   "user_id = ? "
+                ."AND "
+                .   "subscribe_user_id = ? "
+                ;
+        if ( $tag )
+        {
+            $sql .= "AND ( tagname = ? OR tagname IS NULL ) ";
+            $bind[] = $tag;
+        }
+
+        $sql .= "LIMIT 1";
+        $query = $this->db->query($sql, $bind);
+        return ( $query->row() ) ? TRUE : FALSE;
+    }
+
+    public function subscribeUser($userID, $emailID,  $tag = FALSE)
+    {
+        $this->db->transaction();
+        $insert = array(
+            "user_id"           => $this->getUserID(),
+            "subscribe_user_id" => $userID,
+            "tagname"           => ( $tag ) ? $tag : NULL,
+            "email_id"          => $emailID
+        );
+
+        if ( ! $this->db->insert($this->subscribes, $insert) )
+        {
+            $this->db->rollback();
+            return FALSE;
+        }
+
+        $this->db->commit();
+        return TRUE;
+    }
+
 
 }

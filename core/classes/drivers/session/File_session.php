@@ -221,7 +221,6 @@ class SZ_File_session extends SZ_Session_driver
 			$data     = $encrypt->encode($data);
 			$authKey  = $encrypt->encode($authKey);
 			$authData = $encrypt->encode($authData); 
-			
 		}
 		
 		if ( FALSE !== ($handle = @fopen($this->_storePath . $this->_filePrefix . $this->_sessionID, 'wb')) )

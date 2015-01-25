@@ -315,6 +315,11 @@ body, .lap-header > h1, .lap-auth-result > p, .lap-footer > p, .lap-token > h3, 
       color: #223303; }
     .lap-emails .lap-email-status.waiting {
       color: #a00; }
+  .lap-emails [type="radio"] {
+    display: none; }
+    .lap-emails [type="radio"]:checked + div {
+      font-size: 1.2em;
+      font-weight: bold; }
 
 .lap-pin-list {
   list-style: none outside; }
@@ -360,6 +365,20 @@ body, .lap-header > h1, .lap-auth-result > p, .lap-footer > p, .lap-token > h3, 
     color: #900;
     font-size: 0.9em;
     margin: 0 4px; }
+
+.lap-paginate {
+  margin-top: 30px;
+  text-align: center; }
+  .lap-paginate > a, .lap-paginate > strong {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 0.9em;
+    border: solid 1px #ccc;
+    padding: 2px 8px;
+    background: #ddd;
+    color: #333; }
+    .lap-paginate > a:hover, .lap-paginate > strong:hover {
+      background: #eee; }
 
 .lap-tabs {
   width: 80%;

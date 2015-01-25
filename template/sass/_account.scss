@@ -215,5 +215,15 @@
             color: #a00;
         }
     }
+
+    [type="radio"] {
+        display: none;
+
+        &:checked + div {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    }
+
 }
 

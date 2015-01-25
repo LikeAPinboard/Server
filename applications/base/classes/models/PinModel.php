@@ -7,25 +7,44 @@ class PinModel extends SZ_Kennel
     protected $table = "pb_urls";
     protected $tag   = "pb_tags";
 
-    public function getRecentPins($userID, $limit = 20, $offset = 0)
+    public function getRecentPins($userID, $tag = FALSE, $limit = 20, $offset = 0)
     {
         $records   = array();
 
         $sql = "SELECT "
-                .   "id, "
-                .   "title, "
-                .   "url, "
-                .   "created_at "
+                .   "DISTINCT U.id, "
+                .   "U.title, "
+                .   "U.url, "
+                .   "U.created_at "
                 . "FROM "
-                .   $this->table . " "
-                . "WHERE "
-                .   "user_id = ? "
-                . "ORDER BY id DESC "
-                . "LIMIT ? "
-                . "OFFSET ? "
+                .   $this->table . " AS U "
                 ;
+        $where = array();
+        if ( $tag )
+        {
+            $sql .= "JOIN " . $this->tag . " AS T ON ("
+                    .   "U.id = T.url_id "
+                    .") "
+                    ;
+        }
 
-        $query = $this->db->query($sql, array($userID, (int)$limit, (int)$offset));
+        $sql .= "WHERE "
+                .   "user_id = ? ";
+        $where[] = $userID;
+        if ( $tag )
+        {
+            $sql .= "AND T.name LIKE ? ";
+            $where[] = "%{$tag}%";
+        }
+
+        $sql .= "ORDER BY id DESC "
+                ."LIMIT ? "
+                ."OFFSET ? "
+                ;
+        $where[] = (int)$limit;
+        $where[] = (int)$offset;
+
+        $query = $this->db->query($sql, $where);
         if ( $query )
         {
             $records = array_map(function($row) {
@@ -35,6 +54,37 @@ class PinModel extends SZ_Kennel
         }
 
         return $records;
+    }
+
+    public function getTotalPins($userID, $tag = FALSE)
+    {
+        $records   = array();
+
+        $sql = "SELECT "
+                .   "DISTINCT U.id "
+                . "FROM "
+                .   $this->table . " AS U "
+                ;
+        $where = array();
+        if ( $tag )
+        {
+            $sql .= "JOIN " . $this->tag . " AS T ON ("
+                    .   "U.id = T.url_id "
+                    .") "
+                    ;
+        }
+
+        $sql .= "WHERE "
+                .   "user_id = ? ";
+        $where[] = $userID;
+        if ( $tag )
+        {
+            $sql .= "AND T.name LIKE ? ";
+            $where[] = "%{$tag}%";
+        }
+
+        $query = $this->db->query($sql, $where);
+        return count($query->result());
     }
 
     public function getTagsByID($urlID)
@@ -54,13 +104,13 @@ class PinModel extends SZ_Kennel
     public function getRecentTags($userID)
     {
         $sql = "SELECT "
-                .   "(SELECT "
-                .       "COUNT(name) "
-                .   "FROM "
-                .       $this->tag . " as CT "
-                .   "WHERE "
-                .       "CT.name = T.name "
-                .   "LIMIT 1) as cnt, "
+               // .   "(SELECT "
+               // .       "COUNT(name) "
+               // .   "FROM "
+               // .       $this->tag . " as CT "
+               // .   "WHERE "
+               // .       "CT.name = T.name "
+               // .   "LIMIT 1) as cnt, "
                 .   "T.name "
                 . "FROM "
                 .   $this->tag . " as T "
@@ -70,7 +120,8 @@ class PinModel extends SZ_Kennel
                 . "WHERE "
                 .   "P.user_id = ? "
                 . "GROUP BY T.name "
-                . "ORDER BY cnt DESC"
+                . "ORDER BY P.created_at DESC"
+                //. "ORDER BY cnt DESC"
                 ;
 
         $query = $this->db->query($sql, array($userID));

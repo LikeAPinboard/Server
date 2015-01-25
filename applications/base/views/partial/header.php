@@ -13,9 +13,6 @@
         <h1><a href="<?php echo page_link();?>">Like A Pinboard</a></h1>
             <ul class="lap-menu">
                 <?php if ( isset($user) ):?>
-                <li>
-                    <a href="<?php echo page_link("recent/pins");?>" class="lap-link">Recent pins</a>
-                </li>
                 <li class="right-side lap-config">
                     <a href="<?php echo page_link("/");?>" class="lap-link">
                         <i class="fa fa-user"></i>
@@ -25,7 +22,7 @@
                     <ul class="lap-submenu">
                         <li>
                             <a href="<?php echo page_link("my/tools");?>" class="lap-link">
-                                <i class="fa fa-chain"></i>
+                                <i class="fa fa-wrench"></i>
                                 Tools
                             </a>
                         </li>
@@ -33,6 +30,12 @@
                             <a href="<?php echo page_link("my/account");?>" class="lap-link">
                                 <i class="fa fa-user"></i>
                                 Account
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?php echo page_link("my/socials");?>" class="lap-link">
+                                <i class="fa fa-link"></i>
+                                Socials
                             </a>
                         </li>
                         <li>

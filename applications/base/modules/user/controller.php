@@ -8,6 +8,7 @@ class UserController extends SZ_Breeder
         $this->import->library("Session");
         $this->import->model("UserModel");
         $this->import->model("PinModel");
+        $this->import->model("CronModel");
     }
 
     public function _mapping($method)
@@ -42,6 +43,7 @@ class UserController extends SZ_Breeder
             {
                 $this->view->assign("followed",   $this->userModel->isUserFollowed($user->id));
                 $this->view->assign("subscribed", $this->userModel->isUserSubscribed($user->id, $tag));
+                $this->view->assign("cronList",   $this->cronModel->getCronTimeList());
             }
         }
 

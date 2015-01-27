@@ -72,7 +72,8 @@ class SigninController extends SZ_Breeder
         $token  = $this->oauth->get("access_token");
         $id     = $user->id;
         $name   = ( isset($user->username) ) ? $user->username : $user->name;
-        $userID = $this->userModel->registerWithFacebook($id, $name, $token);
+        $image  = ( isset($user->image) ) ? $user->image : "";
+        $userID = $this->userModel->registerWithFacebook($id, $name, $token, $image);
 
         return $this->registerResult($userID, self::SOCIAL_TYPE_FACEBOOK, $token, $id, $name);
     }
@@ -119,7 +120,8 @@ class SigninController extends SZ_Breeder
         $token  = $this->oauth->get("access_token");
         $id     = $user->id;
         $name   = $user->login;
-        $userID = $this->userModel->registerWithGithub($id, $name, $token);
+        $image  = ( isset($user->avatar_url) ) ? $user->avatar_url : "";
+        $userID = $this->userModel->registerWithGithub($id, $name, $token, $image);
 
         return $this->registerResult($userID, self::SOCIAL_TYPE_GITHUB, $token, $id, $name);
     }
@@ -166,7 +168,8 @@ class SigninController extends SZ_Breeder
         $token  = $this->oauth->get("oauth_token");
         $id     = $user->id;
         $name   = $user->screen_name;
-        $userID = $this->userModel->registerWithTwitter($id, $name, $token);
+        $image  = ( isset($user->profile_image_url) ) ? $user->profile_image_url : "";
+        $userID = $this->userModel->registerWithTwitter($id, $name, $token, $image);
 
         return $this->registerResult($userID, self::SOCIAL_TYPE_TWITTER, $token, $id, $name);
     }

@@ -15,11 +15,21 @@
                 <?php if ( isset($user) ):?>
                 <li class="right-side lap-config">
                     <a href="<?php echo page_link("/");?>" class="lap-link">
+                        <?php if ( ! empty($user->icon_image) ):?>
+                        <img src="<?php echo prep_str($user->icon_image);?>" width="30" height="30" class="lap-user-icon">
+                        <?php else:?>
                         <i class="fa fa-user"></i>
+                        <?php endif;?>
                         <?php echo prep_str($user->name);?>
                         <i class="fa fa-sort-desc"></i>
                     </a>
                     <ul class="lap-submenu">
+                        <li>
+                            <a href="<?php echo page_link("my/notifications");?>" class="lap-link">
+                                <i class="fa fa-info-circle"></i>
+                                Notifications
+                            </a>
+                        </li>
                         <li>
                             <a href="<?php echo page_link("my/tools");?>" class="lap-link">
                                 <i class="fa fa-wrench"></i>

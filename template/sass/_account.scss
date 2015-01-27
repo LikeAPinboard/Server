@@ -190,7 +190,7 @@
 
 .lap-emails {
     @extend %reset;
-    padding: 20px;
+    padding: 10px;
     list-style: none outside;
 
     > li {
@@ -219,8 +219,14 @@
     [type="radio"] {
         display: none;
 
+        + div {
+            -webkit-transition: font-size 0.1s linear;
+            font-size: 1.0em;
+        }
+
         &:checked + div {
-            font-size: 1.2em;
+            -webkit-transition: font-size 0.1s linear;
+            font-size: 1.3em;
             font-weight: bold;
         }
     }

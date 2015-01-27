@@ -30,6 +30,10 @@ class MyController extends SZ_Breeder
     {
     }
 
+    public function notifications()
+    {
+    }
+
     public function account()
     {
         $emails = $this->userModel->getUserEmails($this->userModel->getUserID());

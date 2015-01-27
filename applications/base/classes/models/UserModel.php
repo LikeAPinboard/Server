@@ -251,12 +251,17 @@ class UserModel extends SZ_Kennel
      *
      * @public
      * @param int $userID
+     * @param string $iconImage
      */
-    public function updateLastLogin($userID)
+    public function updateUserInfo($userID, $iconImage)
     {
         $date = new DateTime();
 
         $user["last_login"] = $date->format("Y-m-d H:i:s");
+        if ( ! empty($iconImage) )
+        {
+            $user["icon_image"] = $iconImage;
+        }
 
         $this->db->update($this->table, $user, array("id" => (int)$userID));
     }
@@ -280,9 +285,10 @@ class UserModel extends SZ_Kennel
      * @param int    $facebookID
      * @param string $facebookName
      * @param string $facebookAuthToken
+     * @param string $iconImage
      * @return int
      */
-    public function registerWithFacebook($facebookID, $facebookName, $facebookAuthToken)
+    public function registerWithFacebook($facebookID, $facebookName, $facebookAuthToken, $iconImage)
     {
         $this->db->transaction();
 
@@ -298,7 +304,7 @@ class UserModel extends SZ_Kennel
             if ( $query->row() )
             {
                 $id = $query->row()->id;
-                $this->updateLastLogin($id);
+                $this->updateUserInfo($id, $iconImage);
                 $this->db->commit();
                 return $id;
             }
@@ -356,9 +362,10 @@ class UserModel extends SZ_Kennel
      * @param int    $githubID
      * @param string $githubName
      * @param string $githubAuthToken
+     * @param string $iconImage
      * @return int
      */
-    public function registerWithGithub($githubID, $githubName, $githubAuthToken)
+    public function registerWithGithub($githubID, $githubName, $githubAuthToken, $iconImage)
     {
         $this->db->transaction();
 
@@ -374,13 +381,14 @@ class UserModel extends SZ_Kennel
             if ( $query->row() )
             {
                 $id = $query->row()->id;
-                $this->updateLastLogin($id);
+                $this->updateUserInfo($id, $iconImage);
                 $this->db->commit();
                 return $id;
             }
 
             $userID = $this->createUser(array(
                 "name"                => $githubName,
+                "icon_image"          => $image,
                 "github_access_token" => $githubAuthToken
             ));
 
@@ -432,9 +440,10 @@ class UserModel extends SZ_Kennel
      * @param int    $twitterID
      * @param string $twitterName
      * @param string $twitterAuthToken
+     * @param string $iconImage
      * @return int
      */
-    public function registerWithTwitter($twitterID, $twitterName, $twitterAuthToken)
+    public function registerWithTwitter($twitterID, $twitterName, $twitterAuthToken, $iconImage)
     {
         $this->db->transaction();
 
@@ -450,7 +459,7 @@ class UserModel extends SZ_Kennel
             if ( $query->row() )
             {
                 $id = $query->row()->id;
-                $this->updateLastLogin($id);
+                $this->updateUserInfo($id, $iconImage);
                 $this->db->commit();
                 return $id;
             }
@@ -661,14 +670,15 @@ class UserModel extends SZ_Kennel
         return ( $query->row() ) ? TRUE : FALSE;
     }
 
-    public function subscribeUser($userID, $emailID,  $tag = FALSE)
+    public function subscribeUser($userID, $emailID, $cronID, $tag = FALSE)
     {
         $this->db->transaction();
         $insert = array(
             "user_id"           => $this->getUserID(),
             "subscribe_user_id" => $userID,
             "tagname"           => ( $tag ) ? $tag : NULL,
-            "email_id"          => $emailID
+            "email_id"          => $emailID,
+            "cron_time_id"      => $cronID
         );
 
         if ( ! $this->db->insert($this->subscribes, $insert) )

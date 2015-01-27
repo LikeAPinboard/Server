@@ -35,6 +35,15 @@
         height: 300px;
     }
 
+    &.lap-confirm-subscribe {
+        height: 400px;
+
+        .lap-modal-content {
+            height: 321px;
+            overflow: auto;
+        }
+    }
+
     .lap-section-caption {
         border-radius: 4px 4px 0 0;
     }

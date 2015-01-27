@@ -253,7 +253,8 @@ class SZ_Kennel
 		{
 			$sql .= 'OFFSET ' . $offset;
 		}
-		return  $this->db->query($sql, $bindData);
+		
+		return $this->db->query($sql, $bindData);
 	}
 	
 	

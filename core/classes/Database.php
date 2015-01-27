@@ -289,7 +289,7 @@ Class SZ_Database extends SZ_Driver implements Singleton
 	public function query($sql, $bind = FALSE)
 	{
 		$this->_stackBench = $this->_bench();
-		if ( is_array($bind) )
+		if ( is_array($bind) && count($bind) > 0 )
 		{
 			if ( strpos($sql, '?') !== FALSE ) {
 				// query binding chars and bind paramter is match?
@@ -946,8 +946,9 @@ Class SZ_Database extends SZ_Driver implements Singleton
 	 */
 	protected function _stackQueryLog($sql, $bind = FALSE)
 	{
-		$end  = $this->_bench();
-		$time = number_format(($end[0] + $end[1]) - ($this->_stackBench[0] + $this->_stackBench[1]), 4);
+		$end    = $this->_bench();
+		$time   = number_format(($end[0] + $end[1]) - ($this->_stackBench[0] + $this->_stackBench[1]), 4);
+		$logSQL = $sql;
 		
 		if ( $bind !== FALSE )
 		{
@@ -971,10 +972,6 @@ Class SZ_Database extends SZ_Driver implements Singleton
 				}
 				$logSQL = $sql;
 			}
-		}
-		else
-		{
-			$logSQL = $sql;
 		}
 		
 		$this->_queryLog[] = array('query' => $logSQL, 'exec_time' => $time);

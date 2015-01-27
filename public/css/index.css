@@ -80,6 +80,10 @@ body, .lap-header > h1, .lap-auth-result > p, .lap-footer > p, .lap-token > h3, 
       height: 60px; }
     .lap-menu > li:hover .lap-submenu {
       display: block; }
+    .lap-menu > li .lap-user-icon {
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-right: 4px; }
 
 .lap-submenu {
   background: #111;
@@ -299,7 +303,7 @@ body, .lap-header > h1, .lap-auth-result > p, .lap-footer > p, .lap-token > h3, 
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #eeeeee), color-stop(100%, #cccccc)); }
 
 .lap-emails {
-  padding: 20px;
+  padding: 10px;
   list-style: none outside; }
   .lap-emails > li {
     border: solid 1px #ccc;
@@ -317,8 +321,12 @@ body, .lap-header > h1, .lap-auth-result > p, .lap-footer > p, .lap-token > h3, 
       color: #a00; }
   .lap-emails [type="radio"] {
     display: none; }
+    .lap-emails [type="radio"] + div {
+      -webkit-transition: font-size 0.1s linear;
+      font-size: 1em; }
     .lap-emails [type="radio"]:checked + div {
-      font-size: 1.2em;
+      -webkit-transition: font-size 0.1s linear;
+      font-size: 1.3em;
       font-weight: bold; }
 
 .lap-pin-list {
@@ -422,6 +430,11 @@ body, .lap-header > h1, .lap-auth-result > p, .lap-footer > p, .lap-token > h3, 
     height: 200px; }
   .lap-modal-frame.lap-confirm-email {
     height: 300px; }
+  .lap-modal-frame.lap-confirm-subscribe {
+    height: 400px; }
+    .lap-modal-frame.lap-confirm-subscribe .lap-modal-content {
+      height: 321px;
+      overflow: auto; }
   .lap-modal-frame .lap-section-caption {
     border-radius: 4px 4px 0 0; }
   .lap-modal-frame .square {

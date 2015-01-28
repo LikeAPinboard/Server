@@ -11,10 +11,21 @@ class ProcessStartEventHandler
 
     public function userRouting()
     {
-        $segment = Seezoo::getRequest()->segment(1);
-        if ( preg_match("/\Au:(.+)\Z/", $segment, $match) )
+        $request = Seezoo::getRequest();
+        $seg     = 1;
+        $segment = $request->segment(1);
+        if ( preg_match("/\Au:(.+)\Z/", $request->segment($seg), $match) )
         {
-            $buffer = Application::fork(SZ_MODE_MVC, "user/{$match[1]}");
+            $route = "user/{$match[1]}";
+            while ( $tag = $request->segment(++$seg) )
+            {
+                if ( preg_match("/\At:(.+)\Z/", $tag, $m) )
+                {
+                    $route .= "/{$m[1]}";
+                }
+            }
+
+            $buffer = Application::fork(SZ_MODE_MVC, $route);
             exit($buffer);
         }
     }
